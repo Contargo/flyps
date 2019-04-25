@@ -1,0 +1,17 @@
+{
+  "name": "flyps",
+  "version": "0.0.1",
+  "description": "Flyps is just flyps.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Contargo/flyps.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Contargo/flyps/issues"
+  },
+  "homepage": "https://github.com/Contargo/flyps#README"
+}
