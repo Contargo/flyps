@@ -2,7 +2,12 @@
   "name": "flyps",
   "version": "0.0.1",
   "description": "Flyps is just flyps.",
+  "main": "dist/flyps.js",
+  "module": "src/index.js",
   "scripts": {
+    "build": "webpack -p",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/Contargo/flyps/issues"
   },
-  "homepage": "https://github.com/Contargo/flyps#README"
+  "homepage": "https://github.com/Contargo/flyps#README",
+  "devDependencies": {
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
+  }
 }
