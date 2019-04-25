@@ -8,5 +8,8 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     library: "flyps",
     libraryTarget: "umd"
+  },
+  module: {
+    rules: [{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }]
   }
 };
