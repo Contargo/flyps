@@ -12,6 +12,7 @@
     "prepublishOnly": "npm test",
     "test": "jest"
   },
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Contargo/flyps.git"
