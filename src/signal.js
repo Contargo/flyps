@@ -1,8 +1,8 @@
 /**
  * A signal is a container used to store state information. A signal can be made
  * to change state by calling `reset` or `update`.
- * Outputs can be connected to signals. Whenever a signals state changes, all
- * connected outputs will be triggered.
+ * Outputs can be connected to signals. Whenever the state of a signal changes,
+ * all connected outputs will be triggered.
  */
 export function signal(state) {
   let outputs = [];
