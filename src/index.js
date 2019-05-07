@@ -1,1 +1,1 @@
-export { signal } from "./signal";
+export { signal, signalFn } from "./signal";
