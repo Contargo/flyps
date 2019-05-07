@@ -49,6 +49,7 @@ export function signalFn(fn, state) {
   let inputs = [];
   let outputs = [];
   let disconnectors = new WeakMap();
+  let freeWatchers = [];
   let dirty = true;
 
   return {
@@ -86,6 +87,9 @@ export function signalFn(fn, state) {
         outputs.forEach(fn => fn(this, prev, next));
       }
     },
+    dirty() {
+      return dirty;
+    },
     strobe() {
       dirty = true;
       this.run();
@@ -99,8 +103,28 @@ export function signalFn(fn, state) {
 
       let disconnect = () => {
         outputs = outputs.filter(s => s !== fn);
+
+        if (outputs.length === 0) {
+          this.free();
+        }
       };
       return disconnect;
+    },
+    free() {
+      inputs.forEach(s => {
+        let disconnect = disconnectors.get(s);
+        disconnectors.delete(s);
+        disconnect();
+      });
+      inputs = [];
+      dirty = true;
+      state = undefined;
+
+      freeWatchers.forEach(fn => fn());
+      freeWatchers = [];
+    },
+    onFree(fn) {
+      freeWatchers = [...freeWatchers, fn];
     },
     inputs() {
       if (dirty) {

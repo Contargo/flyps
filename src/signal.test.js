@@ -141,4 +141,32 @@ describe("signalFn", () => {
     expect(outputs[0]).toBe(2);
     expect(outputs[1]).toBe(1);
   });
+  it("frees itself if there are no more connected outputs", () => {
+    let runs = 0;
+    let s1 = signal("foo");
+    let s2 = signalFn(() => {
+      runs++;
+      return s1.value();
+    });
+    let disconnect = s2.connect(() => {});
+
+    expect(runs).toBe(1);
+    expect(s2.dirty()).toBeFalsy();
+
+    disconnect();
+    s1.reset("bar");
+
+    expect(runs).toBe(1);
+    expect(s2.dirty()).toBeTruthy();
+  });
+  it("notifies watchers when freeing itself", () => {
+    let freed = 0;
+    let s = signalFn(() => "foo");
+    let disconnect = s.connect(() => {});
+    s.onFree(() => freed++);
+
+    expect(freed).toBe(0);
+    disconnect();
+    expect(freed).toBe(1);
+  });
 });
