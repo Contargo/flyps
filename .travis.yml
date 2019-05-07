@@ -1,0 +1,15 @@
+language: node_js
+
+cache:
+  directories:
+    - "node_modules"
+
+install:
+  - npm install
+  - npm install -g coveralls
+
+script:
+  - npm test -- --coverage
+  - cat ./coverage/lcov.info | coveralls
+
+
