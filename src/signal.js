@@ -39,10 +39,10 @@ export function signal(state) {
 /**
  * A signalFn is a signal that computes its state by running `fn`. It keeps
  * track of and connects to all referenced input signals during the function
- * call. If the state of any of the connected input signals change, the state of
- * signalFn gets re-computed (which means re-running `fn`). The state hold by the
- * signalFn is the return value of `fn` and can be preset using `state`. Like
- * with signals, outputs can be connected. Whenever the state of a signalFn
+ * call. If the state of any of the connected input signals changes, the state
+ * of signalFn gets re-computed (which means re-running `fn`). The state held by
+ * the signalFn is the return value of `fn` and can be preset using `state`.
+ * Like with signals, outputs can be connected. Whenever the state of a signalFn
  * changes, all connected outputs will be triggered.
  */
 export function signalFn(fn, state) {
