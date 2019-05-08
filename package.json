@@ -9,7 +9,8 @@
     "format": "prettier --write 'src/**/*.js'",
     "lint": "eslint src",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm test && npm run lint",
     "test": "jest"
   },
   "sideEffects": false,
