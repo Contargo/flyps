@@ -14,6 +14,30 @@ import { signalFn } from "./signal";
 let registry = new Map();
 
 /**
+ * Returns a function that calls `fn` with a list of values extracted from the
+ * provided signals returned by `inputsFn`. Arguments passed to the returned
+ * function are transparently passed to `fn`. `inputsFn` is a function that
+ * returns one or many input signals.
+ *
+ * @example
+ *
+ *  let fn = withInputSignals(
+ *    () => signal("foo"),
+ *    (s, arg) => s + arg,
+ *  );
+ *  fn("bar"); // "foobar"
+ */
+export function withInputSignals(inputsFn, fn) {
+  return (...args) => {
+    let inputs = inputsFn(...args);
+    let values = Array.isArray(inputs)
+      ? inputs.map(s => s.value())
+      : inputs.value();
+    return fn(values, ...args);
+  };
+}
+
+/**
  * Connects to the connector identified by `connectorId`. As a result, a signal
  * is returned which can then be used to access a stream of values reactively
  * changing over time.
