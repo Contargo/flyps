@@ -12,6 +12,14 @@ import { signalFn } from "./signal";
  */
 
 let registry = new Map();
+let signalCache = new Map();
+
+function cacheAndReturn(connectorId, signal) {
+  // remove freed signals from the cache
+  signal.onFree(() => signalCache.delete(connectorId));
+  signalCache.set(connectorId, signal);
+  return signal;
+}
 
 /**
  * Returns a function that calls `fn` with a list of values extracted from the
@@ -46,9 +54,12 @@ export function withInputSignals(inputsFn, fn) {
  * `connector`, registering a computation function for `connectorId`.
  */
 export function connect(connectorId) {
+  if (signalCache.has(connectorId)) {
+    return signalCache.get(connectorId);
+  }
   let connectorFn = registry.get(connectorId);
-  if (computationFn) {
-    return computationFn(connectorId);
+  if (connectorFn) {
+    return cacheAndReturn(connectorId, connectorFn(connectorId));
   }
   console.warn("no connector registered for:", connectorId);
 }
@@ -74,6 +85,9 @@ export function connector(connectorId, computationFn) {
  * `connectorId` and must return a `signalFn`.
  */
 export function rawConnector(connectorId, connectorFn) {
+  if (signalCache.has(connectorId)) {
+    signalCache.delete(connectorId);
+  }
   registry.set(connectorId, connectorFn);
   return connectorFn;
 }
@@ -83,4 +97,5 @@ export function rawConnector(connectorId, connectorFn) {
  */
 export function clearConnectors() {
   registry.clear();
+  signalCache.clear();
 }
