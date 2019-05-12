@@ -1,5 +1,16 @@
 import { signalFn } from "./signal";
 
+/**
+ * Connectors
+ *
+ * A connector is a helper to simplify building signal circuits. Connectors
+ * give access to signals. By providing a connectors identifier it's possible
+ * to connect to a specific signal without the need of explicit interconnections
+ * in your code (loose coupling). Connectors can be created by passing a
+ * function that returns a connectors state. The connector will then take care
+ * of the signal creation and lifetime management for you.
+ */
+
 let registry = new Map();
 
 /**
