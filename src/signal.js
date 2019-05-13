@@ -1,6 +1,4 @@
 /**
- * Signals
- *
  * A signal is a container for state information that changes over time.
  * Signals can depend on other signals (inputs). By creating signals and putting
  * them together you build a circuit of signals. State changes will be
@@ -9,13 +7,24 @@
  * change their state which then leads to state change propagation to their
  * dependant signals in the circuit and so on. The propagation stops as soon as
  * there are no more signals reacting to state changes.
+ *
+ * @module signal
  */
 
 /**
- * A signal is a container used to store state information. A signal can be made
+ * A Signal is a container used to store state information. A Signal can be made
  * to change state by calling `reset` or `update`.
- * Outputs can be connected to signals. Whenever the state of a signal changes,
+ * Outputs can be connected to signals. Whenever the state of a Signal changes,
  * all connected outputs will be triggered.
+ *
+ * @typedef Signal
+ */
+
+/**
+ * Creates a new Signal.
+ *
+ * @param {*} state The initial state.
+ * @returns {Signal} The created signal.
  */
 export function signal(state) {
   let outputs = [];
@@ -50,13 +59,23 @@ export function signal(state) {
 }
 
 /**
- * A signalFn is a signal that computes its state by running `fn`. It keeps
+ * A SignalFn is a signal that computes its state by running `fn`. It keeps
  * track of and connects to all referenced input signals during the function
  * call. If the state of any of the connected input signals changes, the state
- * of signalFn gets re-computed (which means re-running `fn`). The state held by
- * the signalFn is the return value of `fn` and can be preset using `state`.
- * Like with signals, outputs can be connected. Whenever the state of a signalFn
+ * of SignalFn gets re-computed (which means re-running `fn`). The state held by
+ * the SignalFn is the return value of `fn` and can be preset using `state`.
+ * Like with signals, outputs can be connected. Whenever the state of a SignalFn
  * changes, all connected outputs will be triggered.
+ *
+ * @typedef SignalFn
+ */
+
+/**
+ * Creates a new SignalFn.
+ *
+ * @param {function} fn The initial state
+ * @param {*} state The initial state
+ * @returns {SignalFn} The created signal.
  */
 export function signalFn(fn, state) {
   let inputs = [];
@@ -159,6 +178,10 @@ let context = undefined;
  * Tracks all referenced signals while running `fn` by setting a new global
  * context. The return value is a tuple of the used context and return value of
  * `fn`. After running `fn`, the previous context gets restored.
+ *
+ * @param {function} fn
+ * @returns {Array} An array that contains the context with information about
+ *    the tracked input signals and the return value of `fn`.
  */
 function trackInputs(fn) {
   let prevContext = context;
