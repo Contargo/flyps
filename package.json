@@ -6,11 +6,13 @@
   "module": "src/index.js",
   "scripts": {
     "build": "webpack -p",
+    "docs": "docma",
     "format": "prettier --write 'src/**/*.js'",
     "lint": "eslint src",
-    "prepare": "npm run build",
+    "prepare": "npm run build && npm run docs",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm test && npm run lint",
+    "serveDocs": "docma serve",
     "test": "jest"
   },
   "sideEffects": false,
@@ -27,6 +29,7 @@
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "babel-loader": "^8.0.5",
+    "docma": "^3.2.2",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.0.1",
