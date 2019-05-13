@@ -6,14 +6,14 @@
   "module": "src/index.js",
   "scripts": {
     "build": "webpack -p",
+    "docs": "docma",
     "format": "prettier --write 'src/**/*.js'",
     "lint": "eslint src",
-    "prepare": "npm run build",
+    "prepare": "npm run build && npm run docs",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm test && npm run lint",
-    "test": "jest",
-    "docs": "docma",
-    "serveDocs": "docma serve"
+    "serveDocs": "docma serve",
+    "test": "jest"
   },
   "sideEffects": false,
   "repository": {
