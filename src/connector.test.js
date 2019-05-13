@@ -7,6 +7,8 @@ import {
 } from "./connector";
 import { signal, signalFn } from "./signal";
 
+/* global global */
+
 global.console.warn = jest.fn();
 
 beforeEach(() => clearConnectors());
