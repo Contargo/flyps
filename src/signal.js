@@ -1,4 +1,17 @@
 /**
+ * Signals
+ *
+ * A signal is a container for state information that changes over time.
+ * Signals can depend on other signals (inputs). By creating signals and putting
+ * them together you build a circuit of signals. State changes will be
+ * propagated through the signal circuit starting from the signal where the
+ * state change happened. The state change might force dependant signals to also
+ * change their state which then leads to state change propagation to their
+ * dependant signals in the circuit and so on. The propagation stops as soon as
+ * there are no more signals reacting to state changes.
+ */
+
+/**
  * A signal is a container used to store state information. A signal can be made
  * to change state by calling `reset` or `update`.
  * Outputs can be connected to signals. Whenever the state of a signal changes,
