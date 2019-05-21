@@ -9,9 +9,10 @@ import { signal, signalFn } from "./signal";
 
 /* global global */
 
-global.console.warn = jest.fn();
-
-beforeEach(() => clearConnectors());
+beforeEach(() => {
+  global.console.warn = jest.fn();
+  clearConnectors();
+});
 
 describe("withInputSignals", () => {
   it("injects extracted value from single input signal", () => {
