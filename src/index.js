@@ -4,5 +4,5 @@ export {
   rawConnector,
   withInputSignals,
 } from "./connector";
-export { mount, unmount } from "./dom";
+export { mount } from "./dom";
 export { signal, signalFn } from "./signal";

@@ -1,4 +1,4 @@
-import { mount, unmount } from "./dom";
+import { mount } from "./dom";
 import { signal } from "./signal";
 
 /* global global */
@@ -11,22 +11,23 @@ beforeEach(() => {
 describe("mount", () => {
   it("calls the patch function on mount", () => {
     let patches = [];
-    let patchFn = (root, prev, next) => {
+    let patchFn = (prev, next) => {
       patches = [...patches, [prev, next]];
       return next;
     };
     let viewFn = () => "foo";
 
-    mount(document.querySelector("#my-view"), viewFn, patchFn);
+    let root = document.querySelector("#my-view");
+    mount(root, viewFn, patchFn);
 
     expect(patches).toHaveLength(1);
     let [prev, next] = patches[0];
-    expect(prev).toBeUndefined();
+    expect(prev).toBe(root);
     expect(next).toBe("foo");
   });
   it("calls the patch function on view changes", () => {
     let patches = [];
-    let patchFn = (root, prev, next) => {
+    let patchFn = (prev, next) => {
       patches = [...patches, [prev, next]];
       return next;
     };
@@ -42,81 +43,25 @@ describe("mount", () => {
     expect(prev).toBe("foo");
     expect(next).toBe("bar");
   });
-  it("mounts only one view per root", () => {
-    let patches = [];
-    let patchFn = (root, prev, next) => {
-      patches = [...patches, [prev, next]];
-      return next;
-    };
-    let root = document.querySelector("#my-view");
-
-    mount(root, () => "foo", patchFn);
-    expect(patches).toHaveLength(1);
-
-    mount(root, () => "bar", patchFn);
-    expect(patches).toHaveLength(1);
-    expect(global.console.warn).toHaveBeenCalledWith(
-      "view already mounted to",
-      root,
-    );
-  });
-  it("can mount a view to the same root after unmount", () => {
-    let patches = [];
-    let patchFn = (root, prev, next) => {
-      patches = [...patches, [prev, next]];
-      return next;
-    };
-    let root = document.querySelector("#my-view");
-
-    mount(root, () => "foo", patchFn);
-    expect(patches).toHaveLength(1);
-
-    unmount(root, () => {});
-
-    mount(root, () => "bar", patchFn);
-    expect(patches).toHaveLength(2);
-
-    {
-      let [prev, next] = patches[0];
-      expect(prev).toBeUndefined();
-      expect(next).toBe("foo");
-    }
-
-    {
-      let [prev, next] = patches[1];
-      expect(prev).toBeUndefined();
-      expect(next).toBe("bar");
-    }
-  });
 });
 
 describe("unmount", () => {
-  it("handles unmounting of unmounted roots", () => {
-    let root = document.querySelector("#my-view");
-    unmount(root, () => {});
-    expect(global.console.warn).toHaveBeenCalledWith(
-      "no mounted view found to unmount from",
-      root,
-    );
-  });
   it("disconnects from view signal", () => {
     let s = signal("foo");
     let patched = 0;
-    let freed = false;
 
-    let viewSignal = mount(
+    let unmount = mount(
       document.querySelector("#my-view"),
       () => s.value(),
       () => ++patched,
+      () => {},
     );
-    viewSignal.onFree(() => (freed = true));
     expect(patched).toBe(1);
 
     s.reset("bar");
     expect(patched).toBe(2);
 
-    unmount(document.querySelector("#my-view"), () => {});
-    expect(freed).toBeTruthy();
+    unmount();
 
     s.reset("baz");
     expect(patched).toBe(2);
@@ -125,12 +70,18 @@ describe("unmount", () => {
     let root = document.querySelector("#my-view");
     let cleanedup = false;
 
-    mount(root, () => {}, () => "foo");
-    let unmounted = unmount(root, node => {
-      expect(node).toBe("foo");
-      cleanedup = true;
-      return "some-value";
-    });
+    let unmount = mount(
+      root,
+      () => {},
+      () => "foo",
+      node => {
+        expect(node).toBe("foo");
+        cleanedup = true;
+        return "some-value";
+      },
+    );
+
+    let unmounted = unmount();
     expect(unmounted).toBe("some-value");
     expect(cleanedup).toBeTruthy();
   });

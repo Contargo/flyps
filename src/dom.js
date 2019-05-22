@@ -12,31 +12,27 @@ import { signalFn } from "./signal";
  * @module dom
  */
 
-/** Holds the root dom nodes with mounted views. */
-let roots = new Map();
-
-/** Holds the disconnectors per signal. */
-let disconnectors = new WeakMap();
-
 /**
- * Mounts the `viewFn` as a child of `root`. Note that there can only be one
- * mounted view per root.
+ * Mounts the result of `viewFn` as a replacement of `root`.
  *
  * The view function is wrapped inside a signal, therefore the view re-computes
  * whenever a state change in any referenced input signal gets detected.
  *
  * As `mount` only tries to make minimal assumptions on how the DOM gets patched
- * a `patchFn` must be provided. What a view function returns is up to the user
- * but must be understand by the patch function. Whenever the result of `viewFn`
- * changes, `patchFn` gets called with the `root` as the first argument, the
- * last result from `patchFn` as the second argument and the result from
- * `viewFn` as the third argument. The patch function must ensure that the DOM
- * gets updated accordingly.
+ * a `patchFn` and `cleanupFn` must be provided. What a view function returns
+ * is up to the user but must be understood by the patch function. Whenever the
+ * result of `viewFn` changes, `patchFn` gets called with the last result from
+ * `patchFn` as the first argument (`root` on first call) and the result from
+ * `viewFn` as the second argument. The patch function must ensure that the DOM
+ * gets updated accordingly. On unmount, the `cleanupFn` gets called with the
+ * last result from `patchFn` and must ensure the previously mounted DOM node
+ * gets removed from the DOM.
  *
  * @param {DOMNode} root The root DOM node.
  * @param {function} viewFn The view function.
  * @param {function} patchFn The patch function.
- * @returns {Signal} The view signal.
+ * @param {function} cleanupFn The cleanup function.
+ * @returns {function} A function to unmount the mounted view from the DOM.
  *
  * @example
  *
@@ -51,71 +47,29 @@ let disconnectors = new WeakMap();
  * // demonstration purposes.
  * mount(document.querySelector("#my-view"),
  *   () => "<h1>Hello World!</h1>",
- *   (root, prev, next) => {
+ *   (prev, next) => {
  *     let el = htmlToElement(next);
- *     if (prev) {
- *       root.replaceChild(el, prev);
- *     } else {
- *       root.appendChild(el);
- *     }
+ *     prev.parentNode.replaceChild(el, prev);
  *     return el;
+ *   },
+ *   prev => {
+ *     return prev.parentNode.removeChild(el);
  *   }
  * );
  */
-export function mount(root, viewFn, patchFn) {
-  if (roots.has(root)) {
-    console.warn("view already mounted to", root);
-    return;
-  }
+export function mount(root, viewFn, patchFn, cleanupFn) {
+  let s = signalFn(viewFn);
 
   let render = next => {
-    let [s, prev] = roots.get(root);
-    prev = patchFn(root, prev, next);
-    roots.set(root, [s, prev]);
+    root = patchFn(root, next);
   };
 
-  let s = signalFn(viewFn);
-  let prev = patchFn(root, undefined, s.value());
-  roots.set(root, [s, prev]);
+  render();
 
   let disconnect = s.connect((signal, prev, next) => render(next));
-  disconnectors.set(s, disconnect);
 
-  return s;
-}
-
-/**
- * Unmounts a mounted view from `root`.
- *
- * As `unmount` only tries to make minimal assumptions on how the DOM gets
- * patched a `cleanupFn` must be provided. It gets called with the last result
- * from `patchFn` used when mounting the view and must ensure any created DOM
- * nodes are removed from `root`.
- *
- * @param {DOMNode} root The root DOM node.
- * @param {function} cleanupFn The cleanup function.
- * @return {*} The return value from `cleanupFn`.
- *
- * @example
- *
- * // Given the example from `mount`, this is an example how to cleanup the
- * // created elements.
- * unmount(document.querySelector("#my-view"), (el) => {
- *   return el.parentNode.removeChild(el);
- * });
- */
-export function unmount(root, cleanupFn) {
-  if (!roots.has(root)) {
-    console.warn("no mounted view found to unmount from", root);
-    return;
-  }
-
-  let [s, prev] = roots.get(root);
-  roots.delete(root);
-
-  let disconnect = disconnectors.get(s);
-  disconnectors.delete(s);
-  disconnect();
-
-  return cleanupFn(prev);
+  return () => {
+    disconnect();
+    return cleanupFn(root);
+  };
 }
