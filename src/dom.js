@@ -1,4 +1,5 @@
 import { signalFn } from "./signal";
+import { queue } from "./internal/queue";
 
 /**
  * The dom module helps to connect view functions with signal circuits. A view
@@ -11,6 +12,8 @@ import { signalFn } from "./signal";
  *
  * @module dom
  */
+
+export const renderQueue = queue();
 
 /**
  * Mounts the result of `viewFn` as a replacement of `root`.
@@ -59,14 +62,21 @@ import { signalFn } from "./signal";
  */
 export function mount(root, viewFn, patchFn, cleanupFn) {
   let s = signalFn(viewFn);
+  let dirty = true;
 
-  let render = next => {
-    root = patchFn(root, next);
+  let render = () => {
+    if (dirty) {
+      root = patchFn(root, s.value());
+      dirty = false;
+    }
   };
 
   render();
 
-  let disconnect = s.connect((signal, prev, next) => render(next));
+  let disconnect = s.connect(() => {
+    dirty = true;
+    renderQueue.enqueue(render);
+  });
 
   return () => {
     disconnect();

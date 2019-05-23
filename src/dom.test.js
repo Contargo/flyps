@@ -1,11 +1,29 @@
 import { mount } from "./dom";
 import { signal } from "./signal";
+import { renderQueue } from "./dom";
 
 /* global global */
+
+let ticker = (function() {
+  let fns = [];
+  return {
+    dispatch(fn) {
+      fns = [...fns, fn];
+    },
+    advance() {
+      let fn = fns.pop();
+      if (fn) fn();
+    },
+    size() {
+      return fns.length;
+    },
+  };
+})();
 
 beforeEach(() => {
   global.console.warn = jest.fn();
   document.body.innerHTML = '<div id="my-view"></div>';
+  renderQueue.tickFn(ticker.dispatch);
 });
 
 describe("mount", () => {
@@ -37,11 +55,34 @@ describe("mount", () => {
     mount(document.querySelector("#my-view"), viewFn, patchFn);
 
     s.reset("bar");
+    ticker.advance();
 
     expect(patches).toHaveLength(2);
     let [prev, next] = patches[1];
     expect(prev).toBe("foo");
     expect(next).toBe("bar");
+  });
+  it("renders only when view is dirty", () => {
+    let patches = [];
+    let patchFn = (prev, next) => {
+      patches = [...patches, [prev, next]];
+      return next;
+    };
+    let s = signal("foo");
+    let viewFn = () => s.value();
+
+    mount(document.querySelector("#my-view"), viewFn, patchFn);
+
+    s.reset("bar");
+    s.reset("baz");
+
+    expect(ticker.size()).toBe(1);
+    ticker.advance();
+
+    expect(patches).toHaveLength(2);
+    let [prev, next] = patches[1];
+    expect(prev).toBe("foo");
+    expect(next).toBe("baz");
   });
 });
 
@@ -59,11 +100,13 @@ describe("unmount", () => {
     expect(patched).toBe(1);
 
     s.reset("bar");
+    ticker.advance();
     expect(patched).toBe(2);
 
     unmount();
 
     s.reset("baz");
+    ticker.advance();
     expect(patched).toBe(2);
   });
   it("calls the cleanup function and returns its result", () => {
