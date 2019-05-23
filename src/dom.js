@@ -34,7 +34,7 @@ export const renderQueue = queue();
  * @param {DOMNode} root The root DOM node.
  * @param {function} viewFn The view function.
  * @param {function} patchFn The patch function.
- * @param {function} cleanupFn The cleanup function.
+ * @param {function} [cleanupFn] The cleanup function.
  * @returns {function} A function to unmount the mounted view from the DOM.
  *
  * @example
@@ -60,7 +60,7 @@ export const renderQueue = queue();
  *   }
  * );
  */
-export function mount(root, viewFn, patchFn, cleanupFn) {
+export function mount(root, viewFn, patchFn, cleanupFn = () => {}) {
   let s = signalFn(viewFn);
   let dirty = true;
 
