@@ -8,7 +8,7 @@ let ticker = (function() {
   let fns = [];
   return {
     dispatch(fn) {
-      fns = [...fns, fn];
+      fns.push(fn);
     },
     advance() {
       let fn = fns.pop();

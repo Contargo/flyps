@@ -4,7 +4,7 @@ export function queue(nextTick = window.requestAnimationFrame) {
 
   return {
     enqueue(fn) {
-      queue = [...queue, fn];
+      queue.push(fn);
       this.schedule();
     },
     flush() {
