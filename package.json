@@ -2,10 +2,11 @@
   "name": "flyps",
   "version": "0.3.0",
   "description": "Flyps is just flyps.",
-  "main": "dist/flyps.js",
-  "module": "src/index.js",
+  "browser": "dist/flyps.umd.js",
+  "module": "dist/flyps.esm.js",
+  "main": "dist/flyps.cjs.js",
   "scripts": {
-    "build": "webpack -p",
+    "build": "rollup -c",
     "docs": "docma",
     "format": "prettier --write 'src/**/*.js'",
     "lint": "eslint src",
@@ -15,7 +16,6 @@
     "serveDocs": "docma serve",
     "test": "jest"
   },
-  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Contargo/flyps.git"
@@ -36,8 +36,8 @@
     "eslint-plugin-prettier": "^3.0.1",
     "jest": "^24.8.0",
     "prettier": "^1.17.0",
-    "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.1"
+    "rollup": "^1.12.3",
+    "rollup-plugin-babel": "^4.3.2"
   },
   "jest": {
     "collectCoverageFrom": [
