@@ -72,6 +72,10 @@ describe("connector", () => {
     connector("foo", () => {});
     const s2 = connect("foo");
     expect(s1).not.toBe(s2);
+    expect(global.console.warn).toHaveBeenCalledWith(
+      "overwriting connector for",
+      "foo",
+    );
   });
 });
 
@@ -87,6 +91,10 @@ describe("rawConnector", () => {
     rawConnector("foo", () => signalFn(() => "foo"));
     const s2 = connect("foo");
     expect(s1).not.toBe(s2);
+    expect(global.console.warn).toHaveBeenCalledWith(
+      "overwriting connector for",
+      "foo",
+    );
   });
 });
 

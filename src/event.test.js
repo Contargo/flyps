@@ -1,4 +1,5 @@
 import {
+  clearHandlings,
   eventQueue,
   trigger,
   triggerImmediately,
@@ -34,6 +35,7 @@ let dummyInterceptor = value => nextFn => context => {
 beforeEach(() => {
   global.console.warn = jest.fn();
   eventQueue.tickFn(ticker.dispatch);
+  clearHandlings();
 });
 
 describe("handling", () => {
@@ -73,6 +75,14 @@ describe("rawHandling", () => {
     let context = handler("foo");
     expect(context.before).toEqual(["a", "b", "c"]);
     expect(context.after).toEqual(["c", "b", "a"]);
+  });
+  it("logs a warning when overwriting an existing handler", () => {
+    rawHandling("foo", [], context => context);
+    rawHandling("foo", [], context => context);
+    expect(global.console.warn).toHaveBeenCalledWith(
+      "overwriting handler for",
+      "foo",
+    );
   });
 });
 

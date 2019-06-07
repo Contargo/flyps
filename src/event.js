@@ -62,6 +62,9 @@ export function rawHandling(eventId, interceptors, handlerFn) {
     };
     return handlerChain(context);
   };
+  if (registry.has(eventId)) {
+    console.warn("overwriting handler for", eventId);
+  }
   registry.set(eventId, handler);
   return handler;
 }
@@ -85,6 +88,13 @@ export function trigger(eventId, ...args) {
  */
 export function triggerImmediately(eventId, ...args) {
   handle(eventId, ...args);
+}
+
+/**
+ * Clears all registered handlings.
+ */
+export function clearHandlings() {
+  registry.clear();
 }
 
 function handle(eventId, ...args) {
