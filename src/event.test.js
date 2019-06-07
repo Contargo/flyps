@@ -6,6 +6,7 @@ import {
   handling,
   rawHandling,
 } from "./event";
+import { clearEffectors, effector } from "./effect";
 
 /* global global */
 
@@ -36,6 +37,7 @@ beforeEach(() => {
   global.console.warn = jest.fn();
   eventQueue.tickFn(ticker.dispatch);
   clearHandlings();
+  clearEffectors();
 });
 
 describe("handling", () => {
@@ -50,6 +52,17 @@ describe("handling", () => {
     let context = handler("foo", "bar", "baz");
     expect(context.causes.event).toStrictEqual(["foo", ["bar", "baz"]]);
     expect(context.effects.succeed).toBeTruthy();
+  });
+  it("handles effects from context", () => {
+    let succeed = false;
+    let handler = handling("foo", () => ({ bar: "baz" }));
+    effector("bar", arg => {
+      expect(arg).toBe("baz");
+      succeed = true;
+    });
+    expect(succeed).toBeFalsy();
+    handler("foo");
+    expect(succeed).toBeTruthy();
   });
 });
 

@@ -1,4 +1,5 @@
 import { queue } from "./internal/queue";
+import { effect } from "./effect";
 
 /**
  * The event module provides machanisms to trigger and handle the happening of
@@ -28,7 +29,7 @@ export const eventQueue = queue();
  *    and must return a map of effects that should be applied.
  */
 export function handling(eventId, handlerFn) {
-  return rawHandling(eventId, [], context => {
+  return rawHandling(eventId, [effectsInterceptor], context => {
     let [eventId, args] = context.causes.event;
     context.effects = handlerFn(context.causes, eventId, ...args);
     return context;
@@ -95,6 +96,20 @@ export function triggerImmediately(eventId, ...args) {
  */
 export function clearHandlings() {
   registry.clear();
+}
+
+/**
+ * An interceptor which calls the corresponding effect handler for each
+ * described effect in `context.effects`.
+ */
+export function effectsInterceptor(nextFn) {
+  return context => {
+    context = nextFn(context);
+    for (let effectId in context.effects) {
+      effect(effectId, context.effects[effectId]);
+    }
+    return context;
+  };
 }
 
 function handle(eventId, ...args) {
