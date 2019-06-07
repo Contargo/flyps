@@ -24,6 +24,13 @@ let ticker = (function() {
   };
 })();
 
+let dummyInterceptor = value => nextFn => context => {
+  context.before = [...(context.before || []), value];
+  context = nextFn(context);
+  context.after = [...(context.after || []), value];
+  return context;
+};
+
 beforeEach(() => {
   global.console.warn = jest.fn();
   eventQueue.tickFn(ticker.dispatch);
@@ -46,17 +53,26 @@ describe("handling", () => {
 
 describe("rawHandling", () => {
   it("passes context and event information to the handler", () => {
-    let handler = rawHandling("foo", [], (context, eventId, ...args) => {
-      expect(context.causes.event).toStrictEqual([eventId, args]);
+    let handler = rawHandling("foo", [], context => {
+      let [eventId, args] = context.causes.event;
       expect(eventId).toBe("foo");
       expect(args).toStrictEqual(["bar", "baz"]);
-
       context.effects = { succeed: true };
       return context;
     });
     let context = handler("foo", "bar", "baz");
     expect(context.causes.event).toStrictEqual(["foo", ["bar", "baz"]]);
     expect(context.effects.succeed).toBeTruthy();
+  });
+  it("chains and runs interceptors in correct order", () => {
+    let handler = rawHandling(
+      "foo",
+      [dummyInterceptor("a"), dummyInterceptor("b"), dummyInterceptor("c")],
+      context => context,
+    );
+    let context = handler("foo");
+    expect(context.before).toEqual(["a", "b", "c"]);
+    expect(context.after).toEqual(["c", "b", "a"]);
   });
 });
 

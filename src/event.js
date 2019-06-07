@@ -28,7 +28,8 @@ export const eventQueue = queue();
  *    and must return a map of effects that should be applied.
  */
 export function handling(eventId, handlerFn) {
-  return rawHandling(eventId, [], (context, eventId, ...args) => {
+  return rawHandling(eventId, [], context => {
+    let [eventId, args] = context.causes.event;
     context.effects = handlerFn(context.causes, eventId, ...args);
     return context;
   });
@@ -47,6 +48,11 @@ export function handling(eventId, handlerFn) {
  *    the causes of the event and modifies the context.
  */
 export function rawHandling(eventId, interceptors, handlerFn) {
+  interceptors.reverse();
+  let handlerChain = interceptors.reduce(
+    (handler, interceptor) => interceptor(handler),
+    handlerFn,
+  );
   let handler = (eventId, ...args) => {
     let context = {
       causes: {
@@ -54,7 +60,7 @@ export function rawHandling(eventId, interceptors, handlerFn) {
       },
       effects: {},
     };
-    return handlerFn(context, eventId, ...args);
+    return handlerChain(context);
   };
   registry.set(eventId, handler);
   return handler;
