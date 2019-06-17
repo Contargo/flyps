@@ -4,9 +4,9 @@ import { effect } from "./effect";
 /**
  * The event module provides machanisms to trigger and handle the happening of
  * events. Raw event handlers are based on reading from and writing to contexts.
- * On top of the provided event contexts there is the concept of event handlers
- * having causes and describing effects. Therefore, an event handler is a pure
- * function that doesn't perform changes but describes them.
+ * On top of the provided event contexts there is the concept of an event
+ * handler having causes and describing effects. Therefore, an event handler is
+ * a pure function that doesn't perform changes but describes them.
  *
  * @module event
  */
@@ -22,18 +22,26 @@ export const eventQueue = queue();
  * The event handler gets called whenever an event with the provided `eventId`
  * gets triggered. It will receive a map of causes related to the event and must
  * return a map which describes the resulting effects. The resulting effects are
- * then performed by specific effect handlers and are not part of the event
+ * then performed by specific effect handlers. Interceptors can be added to
+ * perform additional actions based on the resulting context.
  *
  * @param {string} eventId An event identifier.
  * @param {function} handlerFn A function which gets passed causes of the event
- *    and must return a map of effects that should be applied.
+ *    and must return a map of effects that should be performed.
+ * @param {function[]} interceptors A list of interceptor functions.
+ *
+ * @see {@link event.effectsInterceptor} for an interceptor example.
  */
-export function handling(eventId, handlerFn) {
-  return rawHandling(eventId, [effectsInterceptor], context => {
-    let [eventId, args] = context.causes.event;
-    context.effects = handlerFn(context.causes, eventId, ...args);
-    return context;
-  });
+export function handler(eventId, handlerFn, interceptors = []) {
+  return rawHandler(
+    eventId,
+    context => {
+      let [eventId, args] = context.causes.event;
+      context.effects = handlerFn(context.causes, eventId, ...args);
+      return context;
+    },
+    [effectsInterceptor, ...interceptors],
+  );
 }
 
 /**
@@ -47,8 +55,11 @@ export function handling(eventId, handlerFn) {
  * @param {string} eventId An event identifier.
  * @param {function} handlerFn A function which gets passed a context describing
  *    the causes of the event and modifies the context.
+ * @param {function[]} interceptors A list of interceptor functions.
+ *
+ * @see {@link event.effectsInterceptor} for an interceptor example.
  */
-export function rawHandling(eventId, interceptors, handlerFn) {
+export function rawHandler(eventId, handlerFn, interceptors = []) {
   interceptors.reverse();
   let handlerChain = interceptors.reduce(
     (handler, interceptor) => interceptor(handler),
@@ -59,7 +70,6 @@ export function rawHandling(eventId, interceptors, handlerFn) {
       causes: {
         event: [eventId, args],
       },
-      effects: {},
     };
     return handlerChain(context);
   };
@@ -92,9 +102,9 @@ export function triggerImmediately(eventId, ...args) {
 }
 
 /**
- * Clears all registered handlings.
+ * Clears all registered handlers.
  */
-export function clearHandlings() {
+export function clearHandlers() {
   registry.clear();
 }
 
