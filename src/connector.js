@@ -128,6 +128,9 @@ export function rawConnector(connectorId, connectorFn) {
   if (signalCache.has(connectorId)) {
     signalCache.delete(connectorId);
   }
+  if (registry.has(connectorId)) {
+    console.warn("overwriting connector for", connectorId);
+  }
   registry.set(connectorId, connectorFn);
 }
 
