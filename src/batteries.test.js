@@ -1,5 +1,6 @@
 import "./batteries";
 import { cause } from "./cause";
+import { db } from "./db";
 import { effect } from "./effect";
 import { trigger } from "./event";
 
@@ -22,12 +23,26 @@ window.XMLHttpRequest = function() {
   return xhr;
 };
 
+describe("db cause", () => {
+  it("should return the state of db", () => {
+    db.reset({ foo: "bar" });
+    expect(cause("db")).toStrictEqual({ foo: "bar" });
+  });
+});
+
 describe("now cause", () => {
   it("should return the current time", () => {
     let now = Date.now();
     let causedNow = cause("now");
     let delta = (causedNow - now) / 1000;
     expect(delta).toBeCloseTo(0);
+  });
+});
+
+describe("db effect", () => {
+  it("should reset the state of db", () => {
+    effect("db", { foo: "baz" });
+    expect(db.value()).toStrictEqual({ foo: "baz" });
   });
 });
 

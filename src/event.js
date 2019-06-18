@@ -41,7 +41,7 @@ export function handler(eventId, handlerFn, interceptors = []) {
       context.effects = handlerFn(context.causes, eventId, ...args);
       return context;
     },
-    [effectsInterceptor, ...interceptors],
+    [injectCause("db"), effectsInterceptor, ...interceptors],
   );
 }
 

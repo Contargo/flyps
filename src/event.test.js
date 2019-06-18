@@ -57,6 +57,16 @@ describe("handler", () => {
     expect(context.causes.event).toStrictEqual(["foo", ["bar", "baz"]]);
     expect(context.effects.succeed).toBeTruthy();
   });
+  it("injects the db cause into the context", () => {
+    let called = false;
+    let handlerFn = handler("foo", causes => {
+      expect(causes.db).toBe("value");
+      called = true;
+    });
+    causing("db", () => "value");
+    handlerFn("foo");
+    expect(called).toBe(true);
+  });
   it("handles effects from context", () => {
     let succeed = false;
     let handlerFn = handler("foo", () => ({ bar: "baz" }));
