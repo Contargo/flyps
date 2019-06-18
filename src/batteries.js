@@ -1,5 +1,11 @@
+import { causing } from "./cause";
 import { effector } from "./effect";
 import { trigger } from "./event";
+
+/**
+ * Cause that returns the current time.
+ */
+causing("now", () => Date.now());
 
 /**
  * Effect that triggers an event with args.

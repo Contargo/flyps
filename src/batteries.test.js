@@ -1,4 +1,5 @@
 import "./batteries";
+import { cause } from "./cause";
 import { effect } from "./effect";
 import { trigger } from "./event";
 
@@ -20,6 +21,15 @@ window.XMLHttpRequest = function() {
   xhrs = [...xhrs, xhr];
   return xhr;
 };
+
+describe("now cause", () => {
+  it("should return the current time", () => {
+    let now = Date.now();
+    let causedNow = cause("now");
+    let delta = (causedNow - now) / 1000;
+    expect(delta).toBeCloseTo(0);
+  });
+});
 
 describe("trigger effect", () => {
   it("should trigger the described event", () => {
