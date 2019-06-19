@@ -1,5 +1,32 @@
+import { causing } from "./cause";
 import { effector } from "./effect";
 import { trigger } from "./event";
+import { db } from "./db";
+
+/**
+ * Cause that returs the state of the database signal.
+ *
+ * @see {@link db}
+ */
+causing("db", () => db.value());
+
+/**
+ * Cause that returns the current time.
+ */
+causing("now", () => Date.now());
+
+/**
+ * Effect that resets the state of the database signal to a new value.
+ *
+ * @see {@link db}
+ *
+ * @example
+ *
+ * {
+ *   db: { ...db, some: "value" }
+ * }
+ */
+effector("db", updatedDb => db.reset(updatedDb));
 
 /**
  * Effect that triggers an event with args.

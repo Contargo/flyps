@@ -5,7 +5,10 @@ import {
   triggerImmediately,
   handler,
   rawHandler,
+  injectCause,
+  effectsInterceptor,
 } from "./event";
+import { clearCausings, causing } from "./cause";
 import { clearEffectors, effector } from "./effect";
 
 /* global global */
@@ -37,6 +40,7 @@ beforeEach(() => {
   global.console.warn = jest.fn();
   eventQueue.tickFn(ticker.dispatch);
   clearHandlers();
+  clearCausings();
   clearEffectors();
 });
 
@@ -52,6 +56,16 @@ describe("handler", () => {
     let context = handlerFn("foo", "bar", "baz");
     expect(context.causes.event).toStrictEqual(["foo", ["bar", "baz"]]);
     expect(context.effects.succeed).toBeTruthy();
+  });
+  it("injects the db cause into the context", () => {
+    let called = false;
+    let handlerFn = handler("foo", causes => {
+      expect(causes.db).toBe("value");
+      called = true;
+    });
+    causing("db", () => "value");
+    handlerFn("foo");
+    expect(called).toBe(true);
   });
   it("handles effects from context", () => {
     let succeed = false;
@@ -131,5 +145,28 @@ describe("triggerImmediately", () => {
       "no handler registered for:",
       "bar",
     );
+  });
+});
+
+describe("injectCause", () => {
+  it("injects the causes into the context", () => {
+    causing("foo", () => "bar");
+    let interceptor = injectCause("foo");
+    let handlerFn = interceptor(context => context);
+    let context = handlerFn({ causes: {} });
+    expect(context.causes.foo).toBe("bar");
+  });
+});
+
+describe("effectsInterceptor", () => {
+  it("runs the effects registered in the context", () => {
+    let called = false;
+    effector("foo", arg => {
+      expect(arg).toBe("bar");
+      called = true;
+    });
+    let handlerFn = effectsInterceptor(context => context);
+    handlerFn({ effects: { foo: "bar" } });
+    expect(called).toBeTruthy();
   });
 });

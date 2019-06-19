@@ -1,4 +1,5 @@
 import { queue } from "./internal/queue";
+import { cause } from "./cause";
 import { effect } from "./effect";
 
 /**
@@ -40,7 +41,7 @@ export function handler(eventId, handlerFn, interceptors = []) {
       context.effects = handlerFn(context.causes, eventId, ...args);
       return context;
     },
-    [effectsInterceptor, ...interceptors],
+    [injectCause("db"), effectsInterceptor, ...interceptors],
   );
 }
 
@@ -106,6 +107,19 @@ export function triggerImmediately(eventId, ...args) {
  */
 export function clearHandlers() {
   registry.clear();
+}
+
+/**
+ * Creates an interceptor which injects the cause identified by `causeId` into
+ * the contexts causes.
+ */
+export function injectCause(causeId, ...args) {
+  return nextFn => {
+    return context => {
+      context.causes[causeId] = cause(causeId, ...args);
+      return nextFn(context);
+    };
+  };
 }
 
 /**
