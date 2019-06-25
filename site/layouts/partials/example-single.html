@@ -1,0 +1,17 @@
+{{ $id := .File.ContentBaseName }}
+<div id="{{ $id }}">
+  {{ .Content }}
+
+  {{ range .Resources.Match "*.js" }}
+    {{ $example := strings.TrimSuffix ".js" .Name }}
+  <div id="{{ $example }}" class="mount"></div>
+  {{ highlight .Content "javascript" "" }}
+  <script type="text/javascript">
+    {
+      let mountPoint = document.createElement("div");
+      document.querySelector("#{{ $id }} > #{{ $example }}.mount").appendChild(mountPoint);
+      {{ .Content | safeJS }}
+    }
+  </script>
+  {{ end }}
+</div>

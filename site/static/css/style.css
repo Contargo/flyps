@@ -1,0 +1,108 @@
+/* A64B00 */
+body {
+  background-color: #e2ddd5;
+  color: #555;
+  font-family: "sans-serif";
+  font-size: 1em;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 1.8em;
+}
+
+h2 {
+  font-size: 1.4em;
+  margin: 3rem 0 1.5rem 0;
+}
+
+h3 {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+p {
+  line-height: 1.5em;
+}
+
+a {
+  color: #965;
+  border-bottom: 1px dotted #965;
+  text-decoration: none;
+}
+a:hover,
+a:visited {
+  color: #777;
+  border-bottom-color: #777;
+}
+
+main {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 20px #00000015;
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 2rem 4em;
+}
+
+header,
+footer {
+  max-width: 80ch;
+  margin: 2rem auto;
+}
+
+header ul {
+  list-style: none;
+  padding: 0;
+}
+
+header ul > * {
+  display: inline-block;
+}
+
+header ul > * + * {
+  padding-left: 2rem;
+}
+
+.highlight,
+.mount {
+  background-color: #f0f0f0;
+  margin: 0 -4rem;
+}
+
+.highlight > pre {
+  padding: 1rem 4rem;
+  margin: 0;
+}
+
+.mount > * {
+  padding: 1rem 4rem;
+  border-bottom: 5px solid #e5e5e5;
+}
+
+.highlight > pre code {
+  display: block;
+  padding-bottom: 1rem;
+}
+
+.highlight > pre:before,
+.mount > *:before {
+  color: #bbb;
+  display: block;
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 1rem 0 2rem 0;
+}
+
+.highlight > pre:before {
+  content: "Source";
+}
+
+.mount > *:before {
+  content: "Example";
+}

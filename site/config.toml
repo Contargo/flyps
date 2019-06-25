@@ -1,0 +1,5 @@
+languageCode = "en-us"
+title = "Flyps"
+baseURL = "https://contargo.github.io/flyps"
+pygmentsStyle = "friendly"
+disableKinds = ["taxonomy", "RSS"]
