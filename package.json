@@ -24,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/Contargo/flyps/issues"
   },
-  "homepage": "https://github.com/Contargo/flyps#README",
+  "homepage": "https://contargo.github.io/flyps/",
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
