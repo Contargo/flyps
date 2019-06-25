@@ -1,6 +1,5 @@
 let count = signal(0);
 
-signal({ height: 180, weight: 80 });
 function counter() {
   return h("div.counter", [
     "Number of clicks: ",

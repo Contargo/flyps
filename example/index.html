@@ -190,7 +190,6 @@ mount(mountPoint, numberList);
   <div id="counter" class="mount"></div>
   <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> count <span style="color:#666">=</span> signal(<span style="color:#40a070">0</span>);
 
-signal({ height<span style="color:#666">:</span> <span style="color:#40a070">180</span>, weight<span style="color:#666">:</span> <span style="color:#40a070">80</span> });
 <span style="color:#007020;font-weight:bold">function</span> counter() {
   <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div.counter&#34;</span>, [
     <span style="color:#4070a0">&#34;Number of clicks: &#34;</span>,
@@ -214,7 +213,6 @@ mount(mountPoint, counter);
       document.querySelector("#counter > #counter.mount").appendChild(mountPoint);
       let count = signal(0);
 
-signal({ height: 180, weight: 80 });
 function counter() {
   return h("div.counter", [
     "Number of clicks: ",
