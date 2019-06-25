@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>BMI calculator | Flyps</title>
+    <link rel="stylesheet" href="/flyps/css/normalize.css">
+    <link rel="stylesheet" href="/flyps/css/style.css">
+    <script type="text/javascript" src="/flyps/js/bundle.js"></script>
+  </head>
+  <body>
+    <header>
+  <ul>
+    <li><a href="/flyps/">Flyps</a></li>
+    <li><a href="/flyps/example/">Examples</a></li>
+    <li><a href="https://github.com/Contargo/flyps">Source</a></li>
+  </ul>
+</header>
+
+    <main>
+      
+  <h1>BMI calculator</h1>
+  
+<div id="bmi">
+  
+
+  
+    
+  <div id="bmi" class="mount"></div>
+  <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> data <span style="color:#666">=</span> signal({ height<span style="color:#666">:</span> <span style="color:#40a070">1.8</span>, weight<span style="color:#666">:</span> <span style="color:#40a070">78</span> });
+
+<span style="color:#007020;font-weight:bold">let</span> bmi <span style="color:#666">=</span> signalFn(
+  withInputSignals(
+    () =&gt; data,
+    ({ height, weight }) =&gt; weight <span style="color:#666">/</span> (height <span style="color:#666">*</span> height)
+  )
+);
+
+<span style="color:#007020;font-weight:bold">let</span> diagnose <span style="color:#666">=</span> signalFn(
+  withInputSignals(
+    () =&gt; bmi,
+    bmi =&gt; {
+      <span style="color:#007020;font-weight:bold">if</span> (bmi <span style="color:#666">&lt;</span> <span style="color:#40a070">18.5</span>) <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;underweight&#34;</span>;
+      <span style="color:#007020;font-weight:bold">if</span> (bmi <span style="color:#666">&lt;</span> <span style="color:#40a070">25</span>) <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;healthy&#34;</span>;
+      <span style="color:#007020;font-weight:bold">if</span> (bmi <span style="color:#666">&lt;</span> <span style="color:#40a070">30</span>) <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;overweight&#34;</span>;
+      <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;obese&#34;</span>;
+    }
+  )
+);
+
+<span style="color:#007020;font-weight:bold">let</span> color <span style="color:#666">=</span> signalFn(
+  withInputSignals(
+    () =&gt; diagnose,
+    diagnose =&gt; {
+      <span style="color:#007020;font-weight:bold">switch</span> (diagnose) {
+        <span style="color:#007020;font-weight:bold">case</span> <span style="color:#4070a0">&#34;underweight&#34;</span><span style="color:#666">:</span>
+        <span style="color:#007020;font-weight:bold">case</span> <span style="color:#4070a0">&#34;overweight&#34;</span><span style="color:#666">:</span>
+          <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;orange&#34;</span>;
+        <span style="color:#007020;font-weight:bold">case</span> <span style="color:#4070a0">&#34;healthy&#34;</span><span style="color:#666">:</span>
+          <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;green&#34;</span>;
+        <span style="color:#007020;font-weight:bold">default</span><span style="color:#666">:</span>
+          <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;red&#34;</span>;
+      }
+    }
+  )
+);
+
+<span style="color:#007020;font-weight:bold">function</span> slider(key, value, min, max, step <span style="color:#666">=</span> <span style="color:#40a070">1</span>) {
+  <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;input&#34;</span>, {
+    attrs<span style="color:#666">:</span> {
+      type<span style="color:#666">:</span> <span style="color:#4070a0">&#34;range&#34;</span>,
+      value,
+      min,
+      max,
+      step
+    },
+    style<span style="color:#666">:</span> { width<span style="color:#666">:</span> <span style="color:#4070a0">&#34;100%&#34;</span> },
+    on<span style="color:#666">:</span> {
+      input<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span>(e) {
+        data.update(data =&gt; ({
+          ...data,
+          [key]<span style="color:#666">:</span> e.target.value
+        }));
+      }
+    }
+  });
+}
+
+<span style="color:#007020;font-weight:bold">function</span> calculator([data, bmi, diagnose, color]) {
+  <span style="color:#007020;font-weight:bold">let</span> { height, weight } <span style="color:#666">=</span> data;
+
+  <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div.bmi&#34;</span>, [
+    h(<span style="color:#4070a0">&#34;h3&#34;</span>, <span style="color:#4070a0">&#34;BMI calculator&#34;</span>),
+    h(<span style="color:#4070a0">&#34;div&#34;</span>, [<span style="color:#4070a0">`Height: </span><span style="color:#70a0d0;font-style:italic">${</span>height<span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">m`</span>, slider(<span style="color:#4070a0">&#34;height&#34;</span>, height, <span style="color:#40a070">1.0</span>, <span style="color:#40a070">2.2</span>, <span style="color:#40a070">0.01</span>)]),
+    h(<span style="color:#4070a0">&#34;div&#34;</span>, [<span style="color:#4070a0">`Weight: </span><span style="color:#70a0d0;font-style:italic">${</span>weight<span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">kg`</span>, slider(<span style="color:#4070a0">&#34;weight&#34;</span>, weight, <span style="color:#40a070">30</span>, <span style="color:#40a070">200</span>)]),
+    h(<span style="color:#4070a0">&#34;p&#34;</span>, [
+      <span style="color:#4070a0">`BMI: </span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#007020">Math</span>.round(bmi)<span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">`</span>,
+      <span style="color:#4070a0">&#34; - &#34;</span>,
+      h(<span style="color:#4070a0">&#34;strong&#34;</span>, { style<span style="color:#666">:</span> { color<span style="color:#666">:</span> color } }, diagnose)
+    ])
+  ]);
+}
+
+mount(
+  mountPoint,
+  withInputSignals(() =&gt; [data, bmi, diagnose, color], calculator)
+);
+</code></pre></div>
+  <script type="text/javascript">
+    {
+      let mountPoint = document.createElement("div");
+      document.querySelector("#bmi > #bmi.mount").appendChild(mountPoint);
+      let data = signal({ height: 1.8, weight: 78 });
+
+let bmi = signalFn(
+  withInputSignals(
+    () => data,
+    ({ height, weight }) => weight / (height * height)
+  )
+);
+
+let diagnose = signalFn(
+  withInputSignals(
+    () => bmi,
+    bmi => {
+      if (bmi < 18.5) return "underweight";
+      if (bmi < 25) return "healthy";
+      if (bmi < 30) return "overweight";
+      return "obese";
+    }
+  )
+);
+
+let color = signalFn(
+  withInputSignals(
+    () => diagnose,
+    diagnose => {
+      switch (diagnose) {
+        case "underweight":
+        case "overweight":
+          return "orange";
+        case "healthy":
+          return "green";
+        default:
+          return "red";
+      }
+    }
+  )
+);
+
+function slider(key, value, min, max, step = 1) {
+  return h("input", {
+    attrs: {
+      type: "range",
+      value,
+      min,
+      max,
+      step
+    },
+    style: { width: "100%" },
+    on: {
+      input: function(e) {
+        data.update(data => ({
+          ...data,
+          [key]: e.target.value
+        }));
+      }
+    }
+  });
+}
+
+function calculator([data, bmi, diagnose, color]) {
+  let { height, weight } = data;
+
+  return h("div.bmi", [
+    h("h3", "BMI calculator"),
+    h("div", [`Height: ${height}m`, slider("height", height, 1.0, 2.2, 0.01)]),
+    h("div", [`Weight: ${weight}kg`, slider("weight", weight, 30, 200)]),
+    h("p", [
+      `BMI: ${Math.round(bmi)}`,
+      " - ",
+      h("strong", { style: { color: color } }, diagnose)
+    ])
+  ]);
+}
+
+mount(
+  mountPoint,
+  withInputSignals(() => [data, bmi, diagnose, color], calculator)
+);
+
+    }
+  </script>
+  
+</div>
+
+
+    </main>
+    <footer>
+</footer>
+
+  </body>
+</html>

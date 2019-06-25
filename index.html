@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta name="generator" content="Hugo 0.55.6" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Flyps | Flyps</title>
+    <link rel="stylesheet" href="/flyps/css/normalize.css">
+    <link rel="stylesheet" href="/flyps/css/style.css">
+    <script type="text/javascript" src="/flyps/js/bundle.js"></script>
+  </head>
+  <body>
+    <header>
+  <ul>
+    <li><a href="/flyps/">Flyps</a></li>
+    <li><a href="/flyps/example/">Examples</a></li>
+    <li><a href="https://github.com/Contargo/flyps">Source</a></li>
+  </ul>
+</header>
+
+    <main>
+      
+  <h1>Flyps</h1>
+  <p>Woha, what&rsquo;s this. This is the new home for the Flyps project. We&rsquo;re just starting out, but make sure to come by again for an update.</p>
+
+<p>For now, here are some examples.</p>
+
+  
+  <h2><a href="https://contargo.github.io/flyps/example/simple/">Simple</a></h2>
+  
+<div id="simple">
+  
+
+  
+    
+  <div id="simple" class="mount"></div>
+  <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">function</span> simple() {
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div&#34;</span>, [
+        h(<span style="color:#4070a0">&#34;p&#34;</span>, <span style="color:#4070a0">&#34;I am a simple view!&#34;</span>),
+        h(<span style="color:#4070a0">&#34;p.special&#34;</span>, [
+            <span style="color:#4070a0">&#34;I render text &#34;</span>,
+            h(<span style="color:#4070a0">&#34;strong&#34;</span>, <span style="color:#4070a0">&#34;bold&#34;</span>),
+            <span style="color:#4070a0">&#34; and &#34;</span>,
+            h(<span style="color:#4070a0">&#34;span&#34;</span>, { style<span style="color:#666">:</span> { color<span style="color:#666">:</span> <span style="color:#4070a0">&#34;red&#34;</span> } }, <span style="color:#4070a0">&#34;red&#34;</span>),
+            <span style="color:#4070a0">&#34;.&#34;</span>
+        ])
+    ]);
+} 
+
+mount(mountPoint, simple);
+</code></pre></div>
+  <script type="text/javascript">
+    {
+      let mountPoint = document.createElement("div");
+      document.querySelector("#simple > #simple.mount").appendChild(mountPoint);
+      function simple() {
+    return h("div", [
+        h("p", "I am a simple view!"),
+        h("p.special", [
+            "I render text ",
+            h("strong", "bold"),
+            " and ",
+            h("span", { style: { color: "red" } }, "red"),
+            "."
+        ])
+    ]);
+} 
+
+mount(mountPoint, simple);
+
+    }
+  </script>
+  
+</div>
+
+
+  <h2><a href="https://contargo.github.io/flyps/example/simple-parent/">Simple Parent</a></h2>
+  
+<div id="simple-parent">
+  
+
+  
+    
+  <div id="simple-parent" class="mount"></div>
+  <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">function</span> simple() {
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div&#34;</span>, [
+        h(<span style="color:#4070a0">&#34;p&#34;</span>, <span style="color:#4070a0">&#34;I am a simple view!&#34;</span>),
+        h(<span style="color:#4070a0">&#34;p.special&#34;</span>, [
+            <span style="color:#4070a0">&#34;I render text &#34;</span>,
+            h(<span style="color:#4070a0">&#34;strong&#34;</span>, <span style="color:#4070a0">&#34;bold&#34;</span>),
+            <span style="color:#4070a0">&#34; and &#34;</span>,
+            h(<span style="color:#4070a0">&#34;span&#34;</span>, { style<span style="color:#666">:</span> { color<span style="color:#666">:</span> <span style="color:#4070a0">&#34;red&#34;</span> } }, <span style="color:#4070a0">&#34;red&#34;</span>),
+            <span style="color:#4070a0">&#34;.&#34;</span>
+        ])
+    ]);
+} 
+
+<span style="color:#007020;font-weight:bold">function</span> parent() {
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div&#34;</span>, [
+        h(<span style="color:#4070a0">&#34;p&#34;</span>, <span style="color:#4070a0">&#34;I&#39;m the parent of the simple view&#34;</span>),
+        simple()
+    ]);
+}
+
+mount(mountPoint, parent);
+</code></pre></div>
+  <script type="text/javascript">
+    {
+      let mountPoint = document.createElement("div");
+      document.querySelector("#simple-parent > #simple-parent.mount").appendChild(mountPoint);
+      function simple() {
+    return h("div", [
+        h("p", "I am a simple view!"),
+        h("p.special", [
+            "I render text ",
+            h("strong", "bold"),
+            " and ",
+            h("span", { style: { color: "red" } }, "red"),
+            "."
+        ])
+    ]);
+} 
+
+function parent() {
+    return h("div", [
+        h("p", "I'm the parent of the simple view"),
+        simple()
+    ]);
+}
+
+mount(mountPoint, parent);
+
+    }
+  </script>
+  
+</div>
+
+
+  <h2><a href="https://contargo.github.io/flyps/example/list/">List</a></h2>
+  
+<div id="list">
+  
+
+  
+    
+  <div id="list" class="mount"></div>
+  <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">function</span> list(items) {
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;ul&#34;</span>, items.map(
+        item =&gt; h(<span style="color:#4070a0">&#34;li&#34;</span>, <span style="color:#4070a0">`Item </span><span style="color:#70a0d0;font-style:italic">${</span>item<span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">`</span>)
+    ));
+} 
+
+<span style="color:#007020;font-weight:bold">function</span> numberList() {
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div&#34;</span>, [
+        <span style="color:#4070a0">&#34;Here is a list of numbers:&#34;</span>,
+        list([<span style="color:#40a070">1</span>,<span style="color:#40a070">2</span>,<span style="color:#40a070">3</span>])
+    ]);
+}
+
+mount(mountPoint, numberList);
+</code></pre></div>
+  <script type="text/javascript">
+    {
+      let mountPoint = document.createElement("div");
+      document.querySelector("#list > #list.mount").appendChild(mountPoint);
+      function list(items) {
+    return h("ul", items.map(
+        item => h("li", `Item ${item}`)
+    ));
+} 
+
+function numberList() {
+    return h("div", [
+        "Here is a list of numbers:",
+        list([1,2,3])
+    ]);
+}
+
+mount(mountPoint, numberList);
+
+    }
+  </script>
+  
+</div>
+
+
+  <h2><a href="https://contargo.github.io/flyps/example/counter/">Counter</a></h2>
+  
+<div id="counter">
+  
+
+  
+    
+  <div id="counter" class="mount"></div>
+  <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> count <span style="color:#666">=</span> signal(<span style="color:#40a070">0</span>);
+
+signal({ height<span style="color:#666">:</span> <span style="color:#40a070">180</span>, weight<span style="color:#666">:</span> <span style="color:#40a070">80</span> });
+<span style="color:#007020;font-weight:bold">function</span> counter() {
+  <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div.counter&#34;</span>, [
+    <span style="color:#4070a0">&#34;Number of clicks: &#34;</span>,
+    count.value(),
+    h(
+      <span style="color:#4070a0">&#34;button&#34;</span>,
+      {
+        style<span style="color:#666">:</span> { margin<span style="color:#666">:</span> <span style="color:#4070a0">&#34;10px&#34;</span> },
+        on<span style="color:#666">:</span> { click<span style="color:#666">:</span> () =&gt; count.update(count =&gt; count <span style="color:#666">+</span> <span style="color:#40a070">1</span>) }
+      },
+      <span style="color:#4070a0">&#34;Click!&#34;</span>
+    )
+  ]);
+}
+
+mount(mountPoint, counter);
+</code></pre></div>
+  <script type="text/javascript">
+    {
+      let mountPoint = document.createElement("div");
+      document.querySelector("#counter > #counter.mount").appendChild(mountPoint);
+      let count = signal(0);
+
+signal({ height: 180, weight: 80 });
+function counter() {
+  return h("div.counter", [
+    "Number of clicks: ",
+    count.value(),
+    h(
+      "button",
+      {
+        style: { margin: "10px" },
+        on: { click: () => count.update(count => count + 1) }
+      },
+      "Click!"
+    )
+  ]);
+}
+
+mount(mountPoint, counter);
+
+    }
+  </script>
+  
+</div>
+
+
+  <h2><a href="https://contargo.github.io/flyps/example/clock/">Clock</a></h2>
+  
+<div id="clock">
+  
+
+  
+    
+  <div id="clock" class="mount"></div>
+  <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> color <span style="color:#666">=</span> signal(<span style="color:#4070a0">&#34;#000&#34;</span>);
+<span style="color:#007020;font-weight:bold">let</span> now <span style="color:#666">=</span> signal(<span style="color:#007020;font-weight:bold">new</span> <span style="color:#007020">Date</span>());
+
+setInterval(() =&gt; now.reset(<span style="color:#007020;font-weight:bold">new</span> <span style="color:#007020">Date</span>()), <span style="color:#40a070">1000</span>);
+
+<span style="color:#007020;font-weight:bold">function</span> display() {
+    <span style="color:#007020;font-weight:bold">let</span> time <span style="color:#666">=</span> now.value().toTimeString().split(<span style="color:#4070a0">&#34; &#34;</span>)[<span style="color:#40a070">0</span>];
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;h1&#34;</span>, { style<span style="color:#666">:</span> { color<span style="color:#666">:</span> color.value() } }, time);
+} 
+
+<span style="color:#007020;font-weight:bold">function</span> colorInput() {
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;input&#34;</span>, {
+        attrs<span style="color:#666">:</span> { type<span style="color:#666">:</span> <span style="color:#4070a0">&#34;color&#34;</span>, value<span style="color:#666">:</span> color.value() },
+        on<span style="color:#666">:</span> { input<span style="color:#666">:</span> e =&gt; color.reset(e.target.value) },
+    });
+}
+
+<span style="color:#007020;font-weight:bold">function</span> clock() {
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div.clock&#34;</span>, [display(), colorInput()]);
+}
+
+mount(mountPoint, clock);
+</code></pre></div>
+  <script type="text/javascript">
+    {
+      let mountPoint = document.createElement("div");
+      document.querySelector("#clock > #clock.mount").appendChild(mountPoint);
+      let color = signal("#000");
+let now = signal(new Date());
+
+setInterval(() => now.reset(new Date()), 1000);
+
+function display() {
+    let time = now.value().toTimeString().split(" ")[0];
+    return h("h1", { style: { color: color.value() } }, time);
+} 
+
+function colorInput() {
+    return h("input", {
+        attrs: { type: "color", value: color.value() },
+        on: { input: e => color.reset(e.target.value) },
+    });
+}
+
+function clock() {
+    return h("div.clock", [display(), colorInput()]);
+}
+
+mount(mountPoint, clock);
+
+    }
+  </script>
+  
+</div>
+
+
+  <h2><a href="https://contargo.github.io/flyps/example/bmi/">BMI calculator</a></h2>
+  
+<div id="bmi">
+  
+
+  
+    
+  <div id="bmi" class="mount"></div>
+  <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> data <span style="color:#666">=</span> signal({ height<span style="color:#666">:</span> <span style="color:#40a070">1.8</span>, weight<span style="color:#666">:</span> <span style="color:#40a070">78</span> });
+
+<span style="color:#007020;font-weight:bold">let</span> bmi <span style="color:#666">=</span> signalFn(
+  withInputSignals(
+    () =&gt; data,
+    ({ height, weight }) =&gt; weight <span style="color:#666">/</span> (height <span style="color:#666">*</span> height)
+  )
+);
+
+<span style="color:#007020;font-weight:bold">let</span> diagnose <span style="color:#666">=</span> signalFn(
+  withInputSignals(
+    () =&gt; bmi,
+    bmi =&gt; {
+      <span style="color:#007020;font-weight:bold">if</span> (bmi <span style="color:#666">&lt;</span> <span style="color:#40a070">18.5</span>) <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;underweight&#34;</span>;
+      <span style="color:#007020;font-weight:bold">if</span> (bmi <span style="color:#666">&lt;</span> <span style="color:#40a070">25</span>) <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;healthy&#34;</span>;
+      <span style="color:#007020;font-weight:bold">if</span> (bmi <span style="color:#666">&lt;</span> <span style="color:#40a070">30</span>) <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;overweight&#34;</span>;
+      <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;obese&#34;</span>;
+    }
+  )
+);
+
+<span style="color:#007020;font-weight:bold">let</span> color <span style="color:#666">=</span> signalFn(
+  withInputSignals(
+    () =&gt; diagnose,
+    diagnose =&gt; {
+      <span style="color:#007020;font-weight:bold">switch</span> (diagnose) {
+        <span style="color:#007020;font-weight:bold">case</span> <span style="color:#4070a0">&#34;underweight&#34;</span><span style="color:#666">:</span>
+        <span style="color:#007020;font-weight:bold">case</span> <span style="color:#4070a0">&#34;overweight&#34;</span><span style="color:#666">:</span>
+          <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;orange&#34;</span>;
+        <span style="color:#007020;font-weight:bold">case</span> <span style="color:#4070a0">&#34;healthy&#34;</span><span style="color:#666">:</span>
+          <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;green&#34;</span>;
+        <span style="color:#007020;font-weight:bold">default</span><span style="color:#666">:</span>
+          <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;red&#34;</span>;
+      }
+    }
+  )
+);
+
+<span style="color:#007020;font-weight:bold">function</span> slider(key, value, min, max, step <span style="color:#666">=</span> <span style="color:#40a070">1</span>) {
+  <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;input&#34;</span>, {
+    attrs<span style="color:#666">:</span> {
+      type<span style="color:#666">:</span> <span style="color:#4070a0">&#34;range&#34;</span>,
+      value,
+      min,
+      max,
+      step
+    },
+    style<span style="color:#666">:</span> { width<span style="color:#666">:</span> <span style="color:#4070a0">&#34;100%&#34;</span> },
+    on<span style="color:#666">:</span> {
+      input<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span>(e) {
+        data.update(data =&gt; ({
+          ...data,
+          [key]<span style="color:#666">:</span> e.target.value
+        }));
+      }
+    }
+  });
+}
+
+<span style="color:#007020;font-weight:bold">function</span> calculator([data, bmi, diagnose, color]) {
+  <span style="color:#007020;font-weight:bold">let</span> { height, weight } <span style="color:#666">=</span> data;
+
+  <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div.bmi&#34;</span>, [
+    h(<span style="color:#4070a0">&#34;h3&#34;</span>, <span style="color:#4070a0">&#34;BMI calculator&#34;</span>),
+    h(<span style="color:#4070a0">&#34;div&#34;</span>, [<span style="color:#4070a0">`Height: </span><span style="color:#70a0d0;font-style:italic">${</span>height<span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">m`</span>, slider(<span style="color:#4070a0">&#34;height&#34;</span>, height, <span style="color:#40a070">1.0</span>, <span style="color:#40a070">2.2</span>, <span style="color:#40a070">0.01</span>)]),
+    h(<span style="color:#4070a0">&#34;div&#34;</span>, [<span style="color:#4070a0">`Weight: </span><span style="color:#70a0d0;font-style:italic">${</span>weight<span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">kg`</span>, slider(<span style="color:#4070a0">&#34;weight&#34;</span>, weight, <span style="color:#40a070">30</span>, <span style="color:#40a070">200</span>)]),
+    h(<span style="color:#4070a0">&#34;p&#34;</span>, [
+      <span style="color:#4070a0">`BMI: </span><span style="color:#70a0d0;font-style:italic">${</span><span style="color:#007020">Math</span>.round(bmi)<span style="color:#70a0d0;font-style:italic">}</span><span style="color:#4070a0">`</span>,
+      <span style="color:#4070a0">&#34; - &#34;</span>,
+      h(<span style="color:#4070a0">&#34;strong&#34;</span>, { style<span style="color:#666">:</span> { color<span style="color:#666">:</span> color } }, diagnose)
+    ])
+  ]);
+}
+
+mount(
+  mountPoint,
+  withInputSignals(() =&gt; [data, bmi, diagnose, color], calculator)
+);
+</code></pre></div>
+  <script type="text/javascript">
+    {
+      let mountPoint = document.createElement("div");
+      document.querySelector("#bmi > #bmi.mount").appendChild(mountPoint);
+      let data = signal({ height: 1.8, weight: 78 });
+
+let bmi = signalFn(
+  withInputSignals(
+    () => data,
+    ({ height, weight }) => weight / (height * height)
+  )
+);
+
+let diagnose = signalFn(
+  withInputSignals(
+    () => bmi,
+    bmi => {
+      if (bmi < 18.5) return "underweight";
+      if (bmi < 25) return "healthy";
+      if (bmi < 30) return "overweight";
+      return "obese";
+    }
+  )
+);
+
+let color = signalFn(
+  withInputSignals(
+    () => diagnose,
+    diagnose => {
+      switch (diagnose) {
+        case "underweight":
+        case "overweight":
+          return "orange";
+        case "healthy":
+          return "green";
+        default:
+          return "red";
+      }
+    }
+  )
+);
+
+function slider(key, value, min, max, step = 1) {
+  return h("input", {
+    attrs: {
+      type: "range",
+      value,
+      min,
+      max,
+      step
+    },
+    style: { width: "100%" },
+    on: {
+      input: function(e) {
+        data.update(data => ({
+          ...data,
+          [key]: e.target.value
+        }));
+      }
+    }
+  });
+}
+
+function calculator([data, bmi, diagnose, color]) {
+  let { height, weight } = data;
+
+  return h("div.bmi", [
+    h("h3", "BMI calculator"),
+    h("div", [`Height: ${height}m`, slider("height", height, 1.0, 2.2, 0.01)]),
+    h("div", [`Weight: ${weight}kg`, slider("weight", weight, 30, 200)]),
+    h("p", [
+      `BMI: ${Math.round(bmi)}`,
+      " - ",
+      h("strong", { style: { color: color } }, diagnose)
+    ])
+  ]);
+}
+
+mount(
+  mountPoint,
+  withInputSignals(() => [data, bmi, diagnose, color], calculator)
+);
+
+    }
+  </script>
+  
+</div>
+
+
+
+
+    </main>
+    <footer>
+</footer>
+
+  </body>
+</html>

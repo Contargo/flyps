@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Clock | Flyps</title>
+    <link rel="stylesheet" href="/flyps/css/normalize.css">
+    <link rel="stylesheet" href="/flyps/css/style.css">
+    <script type="text/javascript" src="/flyps/js/bundle.js"></script>
+  </head>
+  <body>
+    <header>
+  <ul>
+    <li><a href="/flyps/">Flyps</a></li>
+    <li><a href="/flyps/example/">Examples</a></li>
+    <li><a href="https://github.com/Contargo/flyps">Source</a></li>
+  </ul>
+</header>
+
+    <main>
+      
+  <h1>Clock</h1>
+  
+<div id="clock">
+  
+
+  
+    
+  <div id="clock" class="mount"></div>
+  <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> color <span style="color:#666">=</span> signal(<span style="color:#4070a0">&#34;#000&#34;</span>);
+<span style="color:#007020;font-weight:bold">let</span> now <span style="color:#666">=</span> signal(<span style="color:#007020;font-weight:bold">new</span> <span style="color:#007020">Date</span>());
+
+setInterval(() =&gt; now.reset(<span style="color:#007020;font-weight:bold">new</span> <span style="color:#007020">Date</span>()), <span style="color:#40a070">1000</span>);
+
+<span style="color:#007020;font-weight:bold">function</span> display() {
+    <span style="color:#007020;font-weight:bold">let</span> time <span style="color:#666">=</span> now.value().toTimeString().split(<span style="color:#4070a0">&#34; &#34;</span>)[<span style="color:#40a070">0</span>];
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;h1&#34;</span>, { style<span style="color:#666">:</span> { color<span style="color:#666">:</span> color.value() } }, time);
+} 
+
+<span style="color:#007020;font-weight:bold">function</span> colorInput() {
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;input&#34;</span>, {
+        attrs<span style="color:#666">:</span> { type<span style="color:#666">:</span> <span style="color:#4070a0">&#34;color&#34;</span>, value<span style="color:#666">:</span> color.value() },
+        on<span style="color:#666">:</span> { input<span style="color:#666">:</span> e =&gt; color.reset(e.target.value) },
+    });
+}
+
+<span style="color:#007020;font-weight:bold">function</span> clock() {
+    <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div.clock&#34;</span>, [display(), colorInput()]);
+}
+
+mount(mountPoint, clock);
+</code></pre></div>
+  <script type="text/javascript">
+    {
+      let mountPoint = document.createElement("div");
+      document.querySelector("#clock > #clock.mount").appendChild(mountPoint);
+      let color = signal("#000");
+let now = signal(new Date());
+
+setInterval(() => now.reset(new Date()), 1000);
+
+function display() {
+    let time = now.value().toTimeString().split(" ")[0];
+    return h("h1", { style: { color: color.value() } }, time);
+} 
+
+function colorInput() {
+    return h("input", {
+        attrs: { type: "color", value: color.value() },
+        on: { input: e => color.reset(e.target.value) },
+    });
+}
+
+function clock() {
+    return h("div.clock", [display(), colorInput()]);
+}
+
+mount(mountPoint, clock);
+
+    }
+  </script>
+  
+</div>
+
+
+    </main>
+    <footer>
+</footer>
+
+  </body>
+</html>
