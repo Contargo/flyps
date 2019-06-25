@@ -7,7 +7,7 @@ make site
 
 cd site/public
 git add --all
-git commit -m "Publish"
+git commit -m "Update site"
 git push origin gh-pages
 
 cd -
