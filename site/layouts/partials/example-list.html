@@ -1,0 +1,4 @@
+{{ range where .Pages.ByPublishDate "Section" "example" }}
+  <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+  {{ partial "example-single.html" . }}
+{{ end }}

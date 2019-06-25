@@ -1,7 +1,7 @@
 SOURCES=$(shell find src -name "*.js")
 
 .PHONY: all clean coverage lint test major-version minor-version patch-version \
-	publish
+	publish site
 
 all: dist/flyps.js
 
@@ -28,6 +28,9 @@ patch-version:
 
 publish:
 	npm publish
+
+site:
+	make -C site
 
 clean:
 	rm -f dist/*
