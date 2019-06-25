@@ -1,3 +1,6 @@
 node_modules/
 dist/
 coverage/
+site/public
+site/resources
+site/static/js/bundle.js
