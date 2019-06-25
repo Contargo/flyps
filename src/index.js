@@ -5,6 +5,7 @@ export {
   withInputSignals,
 } from "./connector";
 export { cause, causing } from "./cause";
+export { db } from "./db";
 export { mount } from "./dom";
 export { effect, effector } from "./effect";
 export {
