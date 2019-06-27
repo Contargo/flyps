@@ -70,24 +70,24 @@ describe("signalFn", () => {
     let s2 = signalFn(() => s1.value());
     let s3 = signalFn(() => s2.value());
 
-    expect(s3.inputs()).toEqual(expect.arrayContaining([s2]));
-    expect(s2.inputs()).toEqual(expect.arrayContaining([s1]));
+    expect(s3.inputs()).toEqual([s2]);
+    expect(s2.inputs()).toEqual([s1]);
   });
   it("disconnects from unused input signals", () => {
     let s1 = signal("foo");
     let s2 = signal("bar");
     let s3 = signalFn(() => (s1.value() === "foo" ? s2.value() : s1.value()));
 
-    expect(s3.inputs()).toEqual(expect.arrayContaining([s1, s2]));
+    expect(s3.inputs()).toEqual([s1, s2]);
     s1.reset("baz");
-    expect(s3.inputs()).toEqual(expect.arrayContaining([s1]));
+    expect(s3.inputs()).toEqual([s1]);
   });
   it("tracks chain of input signals properly (restores context)", () => {
     let s1 = signalFn(() => "s1");
     let s2 = signalFn(() => "s2");
     let s3 = signalFn(() => s1.value() + s2.value());
 
-    expect(s3.inputs()).toEqual(expect.arrayContaining([s1, s2]));
+    expect(s3.inputs()).toEqual([s1, s2]);
     expect(s2.inputs()).toEqual([]);
     expect(s1.inputs()).toEqual([]);
   });
@@ -158,6 +158,20 @@ describe("signalFn", () => {
 
     expect(runs).toBe(1);
     expect(s2.dirty()).toBeTruthy();
+  });
+  it("connects to a referenced signal only once", () => {
+    let s1 = signal("foo");
+    let s2 = signalFn(() => s1.value() + s1.value());
+    let disconnect = s2.connect(() => {});
+    expect(s2.inputs()).toEqual([s1]);
+    expect(disconnect).not.toThrow();
+  });
+  it("connects to a referenced signalFn only once", () => {
+    let s1 = signalFn(() => "foo");
+    let s2 = signalFn(() => s1.value() + s1.value());
+    let disconnect = s2.connect(() => {});
+    expect(s2.inputs()).toEqual([s1]);
+    expect(disconnect).not.toThrow();
   });
   it("notifies watchers when freeing itself", () => {
     let freed = 0;

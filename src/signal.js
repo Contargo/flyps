@@ -32,7 +32,10 @@ export function signal(state) {
   return {
     value() {
       if (context) {
-        context.inputs = [...(context.inputs || []), this];
+        context.inputs = context.inputs || [];
+        if (!context.inputs.includes(this)) {
+          context.inputs = [...context.inputs, this];
+        }
       }
       return state;
     },
@@ -87,7 +90,10 @@ export function signalFn(fn, state) {
   return {
     value() {
       if (context) {
-        context.inputs = [...(context.inputs || []), this];
+        context.inputs = context.inputs || [];
+        if (!context.inputs.includes(this)) {
+          context.inputs = [...context.inputs, this];
+        }
       }
       if (dirty) {
         this.run();
