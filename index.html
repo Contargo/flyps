@@ -28,11 +28,19 @@
   
   <h2><a href="https://contargo.github.io/flyps/example/simple/">Simple</a></h2>
   
+
 <div id="simple">
   
 
   
     
+    
+    
+  
+    
+    
+    
+
   <div id="simple" class="mount"></div>
   <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">function</span> simple() {
     <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div&#34;</span>, [
@@ -53,34 +61,46 @@ mount(mountPoint, simple);
     {
       let mountPoint = document.createElement("div");
       document.querySelector("#simple > #simple.mount").appendChild(mountPoint);
-      function simple() {
-    return h("div", [
-        h("p", "I am a simple view!"),
-        h("p.special", [
-            "I render text ",
-            h("strong", "bold"),
-            " and ",
-            h("span", { style: { color: "red" } }, "red"),
-            "."
-        ])
-    ]);
-} 
+      (function (factory) {
+    typeof define === 'function' && define.amd ? define(factory) :
+    factory();
+}(function () { 'use strict';
 
-mount(mountPoint, simple);
+    function simple() {
+      return h("div", [h("p", "I am a simple view!"), h("p.special", ["I render text ", h("strong", "bold"), " and ", h("span", {
+        style: {
+          color: "red"
+        }
+      }, "red"), "."])]);
+    }
+
+    mount(mountPoint, simple);
+
+}));
 
     }
   </script>
+
+    
   
 </div>
 
 
   <h2><a href="https://contargo.github.io/flyps/example/simple-parent/">Simple Parent</a></h2>
   
+
 <div id="simple-parent">
   
 
   
     
+    
+    
+  
+    
+    
+    
+
   <div id="simple-parent" class="mount"></div>
   <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">function</span> simple() {
     <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;div&#34;</span>, [
@@ -108,41 +128,50 @@ mount(mountPoint, parent);
     {
       let mountPoint = document.createElement("div");
       document.querySelector("#simple-parent > #simple-parent.mount").appendChild(mountPoint);
-      function simple() {
-    return h("div", [
-        h("p", "I am a simple view!"),
-        h("p.special", [
-            "I render text ",
-            h("strong", "bold"),
-            " and ",
-            h("span", { style: { color: "red" } }, "red"),
-            "."
-        ])
-    ]);
-} 
+      (function (factory) {
+    typeof define === 'function' && define.amd ? define(factory) :
+    factory();
+}(function () { 'use strict';
 
-function parent() {
-    return h("div", [
-        h("p", "I'm the parent of the simple view"),
-        simple()
-    ]);
-}
+    function simple() {
+      return h("div", [h("p", "I am a simple view!"), h("p.special", ["I render text ", h("strong", "bold"), " and ", h("span", {
+        style: {
+          color: "red"
+        }
+      }, "red"), "."])]);
+    }
 
-mount(mountPoint, parent);
+    function parent() {
+      return h("div", [h("p", "I'm the parent of the simple view"), simple()]);
+    }
+
+    mount(mountPoint, parent);
+
+}));
 
     }
   </script>
+
+    
   
 </div>
 
 
   <h2><a href="https://contargo.github.io/flyps/example/list/">List</a></h2>
   
+
 <div id="list">
   
 
   
     
+    
+    
+  
+    
+    
+    
+
   <div id="list" class="mount"></div>
   <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">function</span> list(items) {
     <span style="color:#007020;font-weight:bold">return</span> h(<span style="color:#4070a0">&#34;ul&#34;</span>, items.map(
@@ -163,34 +192,48 @@ mount(mountPoint, numberList);
     {
       let mountPoint = document.createElement("div");
       document.querySelector("#list > #list.mount").appendChild(mountPoint);
-      function list(items) {
-    return h("ul", items.map(
-        item => h("li", `Item ${item}`)
-    ));
-} 
+      (function (factory) {
+    typeof define === 'function' && define.amd ? define(factory) :
+    factory();
+}(function () { 'use strict';
 
-function numberList() {
-    return h("div", [
-        "Here is a list of numbers:",
-        list([1,2,3])
-    ]);
-}
+    function list(items) {
+      return h("ul", items.map(function (item) {
+        return h("li", "Item ".concat(item));
+      }));
+    }
 
-mount(mountPoint, numberList);
+    function numberList() {
+      return h("div", ["Here is a list of numbers:", list([1, 2, 3])]);
+    }
+
+    mount(mountPoint, numberList);
+
+}));
 
     }
   </script>
+
+    
   
 </div>
 
 
   <h2><a href="https://contargo.github.io/flyps/example/counter/">Counter</a></h2>
   
+
 <div id="counter">
   
 
   
     
+    
+    
+  
+    
+    
+    
+
   <div id="counter" class="mount"></div>
   <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> count <span style="color:#666">=</span> signal(<span style="color:#40a070">0</span>);
 
@@ -215,38 +258,55 @@ mount(mountPoint, counter);
     {
       let mountPoint = document.createElement("div");
       document.querySelector("#counter > #counter.mount").appendChild(mountPoint);
-      let count = signal(0);
+      (function (factory) {
+  typeof define === 'function' && define.amd ? define(factory) :
+  factory();
+}(function () { 'use strict';
 
-function counter() {
-  return h("div.counter", [
-    "Number of clicks: ",
-    count.value(),
-    h(
-      "button",
-      {
-        style: { margin: "10px" },
-        on: { click: () => count.update(count => count + 1) }
+  var count = signal(0);
+
+  function counter() {
+    return h("div.counter", ["Number of clicks: ", count.value(), h("button", {
+      style: {
+        margin: "10px"
       },
-      "Click!"
-    )
-  ]);
-}
+      on: {
+        click: function click() {
+          return count.update(function (count) {
+            return count + 1;
+          });
+        }
+      }
+    }, "Click!")]);
+  }
 
-mount(mountPoint, counter);
+  mount(mountPoint, counter);
+
+}));
 
     }
   </script>
+
+    
   
 </div>
 
 
   <h2><a href="https://contargo.github.io/flyps/example/clock/">Clock</a></h2>
   
+
 <div id="clock">
   
 
   
     
+    
+    
+  
+    
+    
+    
+
   <div id="clock" class="mount"></div>
   <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> color <span style="color:#666">=</span> signal(<span style="color:#4070a0">&#34;#000&#34;</span>);
 <span style="color:#007020;font-weight:bold">let</span> now <span style="color:#666">=</span> signal(<span style="color:#007020;font-weight:bold">new</span> <span style="color:#007020">Date</span>());
@@ -275,42 +335,71 @@ mount(mountPoint, clock);
     {
       let mountPoint = document.createElement("div");
       document.querySelector("#clock > #clock.mount").appendChild(mountPoint);
-      let color = signal("#000");
-let now = signal(new Date());
+      (function (factory) {
+    typeof define === 'function' && define.amd ? define(factory) :
+    factory();
+}(function () { 'use strict';
 
-setInterval(() => now.reset(new Date()), 1000);
+    var color = signal("#000");
+    var now = signal(new Date());
+    setInterval(function () {
+      return now.reset(new Date());
+    }, 1000);
 
-function display() {
-    let time = now.value().toTimeString().split(" ")[0];
-    return h("h1", { style: { color: color.value() } }, time);
-} 
+    function display() {
+      var time = now.value().toTimeString().split(" ")[0];
+      return h("h1", {
+        style: {
+          color: color.value()
+        }
+      }, time);
+    }
 
-function colorInput() {
-    return h("input", {
-        attrs: { type: "color", value: color.value() },
-        on: { input: e => color.reset(e.target.value) },
-    });
-}
+    function colorInput() {
+      return h("input", {
+        attrs: {
+          type: "color",
+          value: color.value()
+        },
+        on: {
+          input: function input(e) {
+            return color.reset(e.target.value);
+          }
+        }
+      });
+    }
 
-function clock() {
-    return h("div.clock", [display(), colorInput()]);
-}
+    function clock() {
+      return h("div.clock", [display(), colorInput()]);
+    }
 
-mount(mountPoint, clock);
+    mount(mountPoint, clock);
+
+}));
 
     }
   </script>
+
+    
   
 </div>
 
 
   <h2><a href="https://contargo.github.io/flyps/example/bmi/">BMI calculator</a></h2>
   
+
 <div id="bmi">
   
 
   
     
+    
+    
+  
+    
+    
+    
+
   <div id="bmi" class="mount"></div>
   <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> data <span style="color:#666">=</span> signal({ height<span style="color:#666">:</span> <span style="color:#40a070">1.8</span>, weight<span style="color:#666">:</span> <span style="color:#40a070">78</span> });
 
@@ -395,87 +484,167 @@ mount(
     {
       let mountPoint = document.createElement("div");
       document.querySelector("#bmi > #bmi.mount").appendChild(mountPoint);
-      let data = signal({ height: 1.8, weight: 78 });
+      (function (factory) {
+  typeof define === 'function' && define.amd ? define(factory) :
+  factory();
+}(function () { 'use strict';
 
-let bmi = signalFn(
-  withInputSignals(
-    () => data,
-    ({ height, weight }) => weight / (height * height)
-  )
-);
-
-let diagnose = signalFn(
-  withInputSignals(
-    () => bmi,
-    bmi => {
-      if (bmi < 18.5) return "underweight";
-      if (bmi < 25) return "healthy";
-      if (bmi < 30) return "overweight";
-      return "obese";
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
     }
-  )
-);
 
-let color = signalFn(
-  withInputSignals(
-    () => diagnose,
-    diagnose => {
-      switch (diagnose) {
-        case "underweight":
-        case "overweight":
-          return "orange";
-        case "healthy":
-          return "green";
-        default:
-          return "red";
-      }
-    }
-  )
-);
+    return obj;
+  }
 
-function slider(key, value, min, max, step = 1) {
-  return h("input", {
-    attrs: {
-      type: "range",
-      value,
-      min,
-      max,
-      step
-    },
-    style: { width: "100%" },
-    on: {
-      input: function(e) {
-        data.update(data => ({
-          ...data,
-          [key]: e.target.value
+  function _objectSpread(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      var ownKeys = Object.keys(source);
+
+      if (typeof Object.getOwnPropertySymbols === 'function') {
+        ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
         }));
       }
+
+      ownKeys.forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
     }
+
+    return target;
+  }
+
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  }
+
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  }
+
+  var data = signal({
+    height: 1.8,
+    weight: 78
   });
-}
+  var bmi = signalFn(withInputSignals(function () {
+    return data;
+  }, function (_ref) {
+    var height = _ref.height,
+        weight = _ref.weight;
+    return weight / (height * height);
+  }));
+  var diagnose = signalFn(withInputSignals(function () {
+    return bmi;
+  }, function (bmi) {
+    if (bmi < 18.5) return "underweight";
+    if (bmi < 25) return "healthy";
+    if (bmi < 30) return "overweight";
+    return "obese";
+  }));
+  var color = signalFn(withInputSignals(function () {
+    return diagnose;
+  }, function (diagnose) {
+    switch (diagnose) {
+      case "underweight":
+      case "overweight":
+        return "orange";
 
-function calculator([data, bmi, diagnose, color]) {
-  let { height, weight } = data;
+      case "healthy":
+        return "green";
 
-  return h("div.bmi", [
-    h("h3", "BMI calculator"),
-    h("div", [`Height: ${height}m`, slider("height", height, 1.0, 2.2, 0.01)]),
-    h("div", [`Weight: ${weight}kg`, slider("weight", weight, 30, 200)]),
-    h("p", [
-      `BMI: ${Math.round(bmi)}`,
-      " - ",
-      h("strong", { style: { color: color } }, diagnose)
-    ])
-  ]);
-}
+      default:
+        return "red";
+    }
+  }));
 
-mount(
-  mountPoint,
-  withInputSignals(() => [data, bmi, diagnose, color], calculator)
-);
+  function slider(key, value, min, max) {
+    var step = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+    return h("input", {
+      attrs: {
+        type: "range",
+        value: value,
+        min: min,
+        max: max,
+        step: step
+      },
+      style: {
+        width: "100%"
+      },
+      on: {
+        input: function input(e) {
+          data.update(function (data) {
+            return _objectSpread({}, data, _defineProperty({}, key, e.target.value));
+          });
+        }
+      }
+    });
+  }
+
+  function calculator(_ref2) {
+    var _ref3 = _slicedToArray(_ref2, 4),
+        data = _ref3[0],
+        bmi = _ref3[1],
+        diagnose = _ref3[2],
+        color = _ref3[3];
+
+    var height = data.height,
+        weight = data.weight;
+    return h("div.bmi", [h("h3", "BMI calculator"), h("div", ["Height: ".concat(height, "m"), slider("height", height, 1.0, 2.2, 0.01)]), h("div", ["Weight: ".concat(weight, "kg"), slider("weight", weight, 30, 200)]), h("p", ["BMI: ".concat(Math.round(bmi)), " - ", h("strong", {
+      style: {
+        color: color
+      }
+    }, diagnose)])]);
+  }
+
+  mount(mountPoint, withInputSignals(function () {
+    return [data, bmi, diagnose, color];
+  }, calculator));
+
+}));
 
     }
   </script>
+
+    
   
 </div>
 

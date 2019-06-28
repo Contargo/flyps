@@ -21,11 +21,19 @@
       
   <h1>Counter</h1>
   
+
 <div id="counter">
   
 
   
     
+    
+    
+  
+    
+    
+    
+
   <div id="counter" class="mount"></div>
   <div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">let</span> count <span style="color:#666">=</span> signal(<span style="color:#40a070">0</span>);
 
@@ -50,27 +58,36 @@ mount(mountPoint, counter);
     {
       let mountPoint = document.createElement("div");
       document.querySelector("#counter > #counter.mount").appendChild(mountPoint);
-      let count = signal(0);
+      (function (factory) {
+  typeof define === 'function' && define.amd ? define(factory) :
+  factory();
+}(function () { 'use strict';
 
-function counter() {
-  return h("div.counter", [
-    "Number of clicks: ",
-    count.value(),
-    h(
-      "button",
-      {
-        style: { margin: "10px" },
-        on: { click: () => count.update(count => count + 1) }
+  var count = signal(0);
+
+  function counter() {
+    return h("div.counter", ["Number of clicks: ", count.value(), h("button", {
+      style: {
+        margin: "10px"
       },
-      "Click!"
-    )
-  ]);
-}
+      on: {
+        click: function click() {
+          return count.update(function (count) {
+            return count + 1;
+          });
+        }
+      }
+    }, "Click!")]);
+  }
 
-mount(mountPoint, counter);
+  mount(mountPoint, counter);
+
+}));
 
     }
   </script>
+
+    
   
 </div>
 
