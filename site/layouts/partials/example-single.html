@@ -1,17 +1,23 @@
 {{ $id := .File.ContentBaseName }}
+{{ $dir := .File.Dir }}
 <div id="{{ $id }}">
   {{ .Content }}
 
   {{ range .Resources.Match "*.js" }}
     {{ $example := strings.TrimSuffix ".js" .Name }}
+    {{ $distFile := printf "%s/%s.dist.js" $dir $example }}
+    {{ if not (eq ".dist" (path.Ext $example)) }}
+
   <div id="{{ $example }}" class="mount"></div>
   {{ highlight .Content "javascript" "" }}
   <script type="text/javascript">
     {
       let mountPoint = document.createElement("div");
       document.querySelector("#{{ $id }} > #{{ $example }}.mount").appendChild(mountPoint);
-      {{ .Content | safeJS }}
+      {{ readFile $distFile | safeJS }}
     }
   </script>
+
+    {{ end }}
   {{ end }}
 </div>

@@ -2,9 +2,7 @@
 
 all: js site
 
-js: static/js/bundle.js
-
-static/js/bundle.js: index.js node_modules
+js: node_modules
 	npm run build
 
 node_modules: package.json

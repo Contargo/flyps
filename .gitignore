@@ -4,3 +4,4 @@ coverage/
 site/public
 site/resources
 site/static/js/bundle.js
+site/**/*.dist.js
