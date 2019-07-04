@@ -12,7 +12,7 @@ beforeEach(() => {
   trigger.mockClear();
 });
 
-window.XMLHttpRequest = function() {
+window.XMLHttpRequest = function () {
   let xhr = {
     open: jest.fn(),
     send: jest.fn(),
@@ -27,6 +27,13 @@ describe("db cause", () => {
   it("should return the state of db", () => {
     db.reset({ foo: "bar" });
     expect(cause("db")).toStrictEqual({ foo: "bar" });
+  });
+});
+
+describe("db connector", () => {
+  it("should return the state of db", () => {
+    db.reset({ foo: "bar" });
+    expect(connect("db")).toStrictEqual({ foo: "bar" });
   });
 });
 
