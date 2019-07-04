@@ -3,6 +3,7 @@ import { cause } from "./cause";
 import { db } from "./db";
 import { effect } from "./effect";
 import { trigger } from "./event";
+import { connect } from "./connector"
 
 jest.mock("./event");
 
@@ -33,7 +34,7 @@ describe("db cause", () => {
 describe("db connector", () => {
   it("should return the state of db", () => {
     db.reset({ foo: "bar" });
-    expect(connect("db")).toStrictEqual({ foo: "bar" });
+    expect(connect("db").value()).toStrictEqual({ foo: "bar" });
   });
 });
 
