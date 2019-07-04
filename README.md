@@ -61,6 +61,36 @@ mount(document.querySelector("#my-view"),
 
 For more complex views we suggest to add the [flyps-dom-snabbdom] extension, which adds support for [snabbdom] rendering.
 
+### Snabbdom rendering
+
+First install the extension: `npm i flyps-dom-snabbdom`
+
+```
+import { mount, h } from "flyps-dom-snabbdom";
+
+mount(document.querySelector("#my-view"),
+  () => h("h1", "Hello World!")
+);
+```
+
+### Render value from signal
+```
+import { signal } from "flyps";
+import { mount, h } from "flyps-dom-snabbdom";
+
+const data = signal("Hello World!");
+
+mount(document.querySelector("#my-view"),
+  () => h("h1", data.value())
+);
+```
+
+Whenever the `signal` is updated or replaced the view will be re-rendered with the new data.
+
+```
+data.reset("Hello User!");
+```
+
 ### More Examples
 
 More examples can be found on our flyps [homepage].
