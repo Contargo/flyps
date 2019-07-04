@@ -5,10 +5,13 @@
 Flyps
 =====
 
-Flyps is just flyps.
+Flyps is a light-weight library with powerful tools, which help developers
+build modular applications that are [composable], [functional reactive] and
+[pure].
 
-**Woha, what's this. This is the new home for the Flyps project. We're just
-starting out, but make sure to come by again for an update.**
+[composable]: https://en.wikipedia.org/wiki/Function_composition_(computer_science)
+[functional reactive]: https://en.wikipedia.org/wiki/functional_reactive_programming
+[pure]: https://en.wikipedia.org/wiki/Functional_programming#Pure_functions
 
 [npm-badge]: https://img.shields.io/npm/v/flyps.svg
 [npm-url]: https://www.npmjs.com/package/flyps
