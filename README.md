@@ -59,9 +59,9 @@ mount(document.querySelector("#my-view"),
 );
 ```
 
-For more complex views we suggest to add the [flyps-dom-snabbdom] extension, which adds support for [snabbdom] rendering.
-
 ### Snabbdom rendering
+
+For more complex views we suggest to add the [flyps-dom-snabbdom] extension, which adds support for [snabbdom] rendering.
 
 First install the extension: `npm i flyps-dom-snabbdom`
 
@@ -85,7 +85,7 @@ mount(document.querySelector("#my-view"),
 );
 ```
 
-Whenever the `signal` is updated or replaced the view will be re-rendered with the new data.
+Whenever the `signal` changes the view will be re-rendered with the new data.
 
 ```
 data.reset("Hello User!");
