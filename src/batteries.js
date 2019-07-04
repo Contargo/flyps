@@ -2,13 +2,21 @@ import { causing } from "./cause";
 import { effector } from "./effect";
 import { trigger } from "./event";
 import { db } from "./db";
+import { connector } from "./connector";
 
 /**
- * Cause that returs the state of the database signal.
+ * Cause that returns the state of the database signal.
  *
  * @see {@link db}
  */
 causing("db", () => db.value());
+
+/**
+ * Connector that connects to the database state.
+ *
+ * @see {@link db}
+ */
+connector("db", () => db.value());
 
 /**
  * Cause that returns the current time.
