@@ -3,7 +3,7 @@ import { cause } from "./cause";
 import { db } from "./db";
 import { effect } from "./effect";
 import { trigger } from "./event";
-import { connect } from "./connector"
+import { connect } from "./connector";
 
 jest.mock("./event");
 
@@ -13,7 +13,7 @@ beforeEach(() => {
   trigger.mockClear();
 });
 
-window.XMLHttpRequest = function () {
+window.XMLHttpRequest = function() {
   let xhr = {
     open: jest.fn(),
     send: jest.fn(),

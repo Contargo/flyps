@@ -2,7 +2,7 @@ import { causing } from "./cause";
 import { effector } from "./effect";
 import { trigger } from "./event";
 import { db } from "./db";
-import { connector } from "./connector"
+import { connector } from "./connector";
 
 /**
  * Cause that returns the state of the database signal.
@@ -86,7 +86,7 @@ effector(
     for (let name in headers) {
       xhr.setRequestHeader(name, headers[name]);
     }
-    xhr.onload = xhr.onerror = function () {
+    xhr.onload = xhr.onerror = function() {
       switch (this.status) {
         case STATUS_OK:
         case STATUS_CREATED:
