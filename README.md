@@ -21,7 +21,7 @@ You can install flyps via npm:
 
 ### Create a signal
 
-`Signals` are the core principle of flyps.
+`Signals` are the core principle of flyps and are used everywhere.
 
 ```
 import { signal } from "flyps";
@@ -63,7 +63,7 @@ For more complex views we suggest to add the [flyps-dom-snabbdom] extension, whi
 
 ### More Examples
 
-More examples can be found on our [flyps homepage].
+More examples can be found on our flyps [homepage].
 
 
 
