@@ -26,16 +26,16 @@
   },
   "homepage": "https://contargo.github.io/flyps/",
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
     "docma": "^3.2.2",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
-    "eslint-plugin-jest": "^22.7.1",
+    "eslint-plugin-jest": "^22.7.2",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
     "prettier": "^1.18.2",
-    "rollup": "^1.16.2",
+    "rollup": "^1.17.0",
     "rollup-plugin-babel": "^4.3.3"
   },
   "jest": {
