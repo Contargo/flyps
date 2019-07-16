@@ -2,7 +2,6 @@ import {
   clearHandlers,
   eventQueue,
   trigger,
-  triggerImmediately,
   handler,
   rawHandler,
   injectCause,
@@ -125,22 +124,6 @@ describe("trigger", () => {
   it("logs a warning for unknown events", () => {
     trigger("bar");
     ticker.advance();
-    expect(global.console.warn).toHaveBeenCalledWith(
-      "no handler registered for:",
-      "bar",
-    );
-  });
-});
-
-describe("triggerImmediately", () => {
-  it("calls the registered handler", () => {
-    let handled = 0;
-    handler("foo", () => handled++);
-    triggerImmediately("foo");
-    expect(handled).toBe(1);
-  });
-  it("logs a warning for unknown events", () => {
-    triggerImmediately("bar");
     expect(global.console.warn).toHaveBeenCalledWith(
       "no handler registered for:",
       "bar",

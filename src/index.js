@@ -12,7 +12,6 @@ export {
   handler,
   rawHandler,
   trigger,
-  triggerImmediately,
   injectCause,
   effectsInterceptor,
 } from "./event";

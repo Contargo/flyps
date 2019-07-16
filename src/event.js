@@ -93,16 +93,6 @@ export function trigger(eventId, ...args) {
 }
 
 /**
- * Triggers an event immediately without queueing.
- *
- * @param {string} eventId The event identifier.
- * @param  {...any} args Additional arguments describing the event.
- */
-export function triggerImmediately(eventId, ...args) {
-  handle(eventId, ...args);
-}
-
-/**
  * Clears all registered handlers.
  */
 export function clearHandlers() {
