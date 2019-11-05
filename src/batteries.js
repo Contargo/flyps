@@ -86,7 +86,7 @@ effector(
     for (let name in headers) {
       xhr.setRequestHeader(name, headers[name]);
     }
-    xhr.onload = xhr.onerror = function() {
+    xhr.onloadend = function() {
       switch (this.status) {
         case STATUS_OK:
         case STATUS_CREATED:

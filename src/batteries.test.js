@@ -100,7 +100,7 @@ describe("xhr effect", () => {
     const xhr = xhrs[0];
     [200, 201, 202, 204, 206, 304].forEach(status => {
       trigger.mockClear();
-      xhr.onload.call({
+      xhr.onloadend.call({
         status: status,
         statusText: "${status}",
         response: "response",
@@ -121,7 +121,7 @@ describe("xhr effect", () => {
       statusText: "Server error",
       response: "response",
     };
-    xhr.onload.call(response);
+    xhr.onloadend.call(response);
     expect(trigger).toHaveBeenCalledTimes(1);
     expect(trigger).toHaveBeenCalledWith("error", "foo", response);
   });
@@ -134,7 +134,7 @@ describe("xhr effect", () => {
       statusText: "OK",
       response: "response",
     };
-    xhr.onload.call(response);
+    xhr.onloadend.call(response);
     expect(trigger).not.toHaveBeenCalled();
   });
   it("ignores errors if onError is unset", () => {
@@ -146,7 +146,7 @@ describe("xhr effect", () => {
       statusText: "Server error",
       response: "response",
     };
-    xhr.onload.call(response);
+    xhr.onloadend.call(response);
     expect(trigger).not.toHaveBeenCalled();
   });
 });
