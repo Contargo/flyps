@@ -1,7 +1,7 @@
 SOURCES=$(shell find src -name "*.js")
 
-.PHONY: all clean coverage lint test major-version minor-version patch-version \
-	publish site
+.PHONY: all clean coverage lint test test-watch major-version minor-version \
+	patch-version publish site
 
 all: dist/flyps.js
 
@@ -10,6 +10,9 @@ dist/flyps.js: $(SOURCES)
 
 test:
 	npm test
+
+test-watch:
+	npm test -- --watchAll
 
 coverage:
 	npm test -- --coverage
