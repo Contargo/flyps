@@ -7,8 +7,11 @@ import { connect } from "./connector";
 
 jest.mock("./event");
 
+let THROW_ERROR_ON_SEND = false;
+
 let xhrs = [];
 beforeEach(() => {
+  THROW_ERROR_ON_SEND = false;
   xhrs = [];
   trigger.mockClear();
 });
@@ -16,7 +19,11 @@ beforeEach(() => {
 window.XMLHttpRequest = function() {
   let xhr = {
     open: jest.fn(),
-    send: jest.fn(),
+    send: THROW_ERROR_ON_SEND
+      ? () => {
+          throw THROW_ERROR_ON_SEND;
+        }
+      : jest.fn(),
     setRequestHeader: jest.fn(),
   };
   // remember created xhr requests
@@ -124,6 +131,15 @@ describe("xhr effect", () => {
     xhr.onloadend.call(response);
     expect(trigger).toHaveBeenCalledTimes(1);
     expect(trigger).toHaveBeenCalledWith("error", "foo", response);
+  });
+  it("triggers an event on failure", () => {
+    THROW_ERROR_ON_SEND = new Error("no soup for you!");
+    effect("xhr", {
+      onFailure: ["failure", "foo"],
+    });
+    expect(trigger).toHaveBeenCalledWith("failure", "foo", {
+      error: THROW_ERROR_ON_SEND,
+    });
   });
   it("ignores success if onSuccess is unset", () => {
     effect("xhr", {});

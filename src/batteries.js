@@ -78,6 +78,7 @@ effector(
     data,
     onSuccess,
     onError,
+    onFailure,
   }) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
@@ -108,6 +109,14 @@ effector(
           }
       }
     };
-    xhr.send(data);
+    try {
+      xhr.send(data);
+    } catch (e) {
+      if (onFailure) {
+        trigger(...onFailure, { error: e });
+      } else {
+        throw e;
+      }
+    }
   },
 );
