@@ -1,6 +1,6 @@
 {
   "name": "flyps",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Flyps is just flyps.",
   "browser": "dist/flyps.umd.js",
   "module": "dist/flyps.esm.js",
