@@ -135,6 +135,32 @@ export function rawConnector(connectorId, connectorFn) {
 }
 
 /**
+ * Connects the `tapFn` to the connector identified by `connectorId` and starts
+ * applying the stream, from the connected signal, as pairs of current/previous
+ * values.
+ *
+ * @param {string} connectorId The connector identifier.
+ * @param {function} tapFn A function that is mapped over the stream of `curr`
+ *   and `prev` values from the connected signal.
+ *
+ * @example
+ *
+ *  let s = signal("foo");
+ *  rawConnector("myConnector", () => s)
+ *
+ *  tap("myConnector", (curr, prev) => {
+ *    console.log(`Got $curr, was $prev`);
+ *  });
+ *
+ *  s.update("bar"); // => "Got bar, was foo"
+ *  s.update("baz"); // => "Got baz, was bar"
+ *
+ */
+function tap(connectorId, tapFn) {
+  // TODO:!!
+}
+
+/**
  * Clears all registered connectors.
  */
 export function clearConnectors() {
