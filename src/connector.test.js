@@ -4,8 +4,10 @@ import {
   connector,
   rawConnector,
   withInputSignals,
+  tap,
 } from "./connector";
 import { signal, signalFn } from "./signal";
+import { createSecureContext } from "tls";
 
 /* global global */
 
@@ -113,5 +115,23 @@ describe("clearConnectors", () => {
     expect(s1).not.toBe(s2);
     expect(s1).toBeTruthy();
     expect(s2).toBeFalsy();
+  });
+});
+
+describe("tap", () => {
+  it("applies tapFn with curr, prev from the tapped signal", () => {
+    let s = signal("foo");
+    connector("conn", () => s.value());
+    let pairs = [];
+    tap("conn", (curr, prev) => {
+      pairs.push(`${curr}-${prev}`);
+    });
+    s.reset("bar");
+    s.reset("baz");
+    s.reset("goo");
+    expect(pairs.length).toBe(3);
+    expect(pairs[0]).toBe("bar-foo");
+    expect(pairs[1]).toBe("baz-bar");
+    expect(pairs[2]).toBe("goo-baz");
   });
 });

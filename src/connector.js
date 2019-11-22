@@ -154,10 +154,9 @@ export function rawConnector(connectorId, connectorFn) {
  *
  *  s.update("bar"); // => "Got bar, was foo"
  *  s.update("baz"); // => "Got baz, was bar"
- *
  */
-function tap(connectorId, tapFn) {
-  // TODO:!!
+export function tap(connectorId, tapFn) {
+  return connect(connectorId).connect((_, prev, next) => tapFn(next, prev));
 }
 
 /**
