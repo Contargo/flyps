@@ -5,11 +5,14 @@ SOURCES=$(shell find src -name "*.js")
 
 all: dist/flyps.js
 
-dist/flyps.js: $(SOURCES)
+dist/flyps.js: $(SOURCES) node_modules
 	npm run build
 
-test:
+test: node_modules
 	npm test
+
+node_modules:
+	npm install
 
 test-watch:
 	npm test -- --watchAll
