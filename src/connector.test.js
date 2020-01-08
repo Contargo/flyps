@@ -7,7 +7,6 @@ import {
   tap,
 } from "./connector";
 import { signal, signalFn } from "./signal";
-import { createSecureContext } from "tls";
 
 /* global global */
 
