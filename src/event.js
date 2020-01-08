@@ -15,7 +15,13 @@ import { effect } from "./effect";
 /** Holds the registered event handlers. */
 let registry = new Map();
 
-export const eventQueue = queue();
+/**
+ * The event queue scheduling is done at timeouts, without being synchronized
+ * to vertical sync or repaints. Since this is being scheduled in the browser
+ * main event loop, users should avoid stacking too slow blocking operations
+ * in the event handlers.
+ */
+export const eventQueue = queue(fn => setTimeout(fn, 16));
 
 /**
  * Registers an event handler identified by `eventId`.
