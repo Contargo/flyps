@@ -57,6 +57,15 @@ describe("signal", () => {
     expect(outputs[0]).toBe(2);
     expect(outputs[1]).toBe(1);
   });
+  it("uses provided equals", () => {
+    let updates = 0;
+    let s = signal("1", { equals: (a, b) => a == b });
+    s.connect(() => updates++);
+    s.reset(1);
+    expect(updates).toBe(0);
+    s.reset(2);
+    expect(updates).toBe(1);
+  });
 });
 
 describe("signalFn", () => {
@@ -182,5 +191,17 @@ describe("signalFn", () => {
     expect(freed).toBe(0);
     disconnect();
     expect(freed).toBe(1);
+  });
+  it("uses provided equals", () => {
+    let updates = 0;
+    let s1 = signal("1");
+    let s2 = signalFn(() => s1.value(), s1.value(), {
+      equals: (a, b) => a == b,
+    });
+    s2.connect(() => updates++);
+    s1.reset(1);
+    expect(updates).toBe(0);
+    s1.reset(2);
+    expect(updates).toBe(1);
   });
 });

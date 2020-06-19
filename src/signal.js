@@ -20,14 +20,18 @@
  * @typedef Signal
  */
 
+let defaultEquals = (a, b) => a === b;
+
 /**
  * Creates a new Signal.
  *
  * @param {*} state The initial state.
+ * @param {*} options The signals options.
  * @returns {Signal} The created signal.
  */
-export function signal(state) {
+export function signal(state, options = {}) {
   let outputs = [];
+  let { equals = defaultEquals } = options;
 
   return {
     value() {
@@ -43,7 +47,7 @@ export function signal(state) {
       let prev = state;
       state = next;
 
-      if (prev !== next) {
+      if (!equals(prev, next)) {
         outputs.forEach(fn => fn(this, prev, next));
       }
     },
@@ -76,16 +80,18 @@ export function signal(state) {
 /**
  * Creates a new SignalFn.
  *
- * @param {function} fn The initial state
- * @param {*} state The initial state
+ * @param {function} fn The compute function.
+ * @param {*} state The initial state.
+ * @param {*} options The signals options.
  * @returns {SignalFn} The created signal.
  */
-export function signalFn(fn, state) {
+export function signalFn(fn, state, options = {}) {
   let inputs = [];
   let outputs = [];
   let disconnectors = new WeakMap();
   let freeWatchers = [];
   let dirty = true;
+  let { equals = defaultEquals } = options;
 
   return {
     value() {
@@ -121,7 +127,7 @@ export function signalFn(fn, state) {
       let prev = state;
       state = next;
 
-      if (prev !== next) {
+      if (!equals(prev, next)) {
         outputs.forEach(fn => fn(this, prev, next));
       }
     },
