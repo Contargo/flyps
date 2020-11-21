@@ -13,7 +13,7 @@ import { clearEffectors, effector } from "./effect";
 
 /* global global */
 
-let ticker = (function() {
+let ticker = (function () {
   let fns = [];
   return {
     dispatch(fn) {

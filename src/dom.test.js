@@ -4,7 +4,7 @@ import { renderQueue } from "./dom";
 
 /* global global */
 
-let ticker = (function() {
+let ticker = (function () {
   let fns = [];
   return {
     dispatch(fn) {

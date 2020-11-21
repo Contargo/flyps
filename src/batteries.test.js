@@ -13,7 +13,7 @@ beforeEach(() => {
   trigger.mockClear();
 });
 
-window.XMLHttpRequest = function() {
+window.XMLHttpRequest = function () {
   let xhr = {
     open: jest.fn(),
     send: jest.fn(),
