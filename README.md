@@ -17,13 +17,15 @@ build modular applications that are [composable], [functional reactive] and
 
 You can install flyps via npm:
 
-`npm i flyps`
+```bash
+npm i flyps
+```
 
 ### Create a signal
 
 `Signals` are the core principle of flyps and are used everywhere.
 
-```
+```js
 import { signal } from "flyps";
 
 const counter = signal(1);
@@ -33,7 +35,7 @@ const counter = signal(1);
 
 A signal can be updated via a function (`signal::update`) or replaced with a new value (`signal::reset`).
 
-```
+```js
 const counter = signal(0);           // value = 0
 counter.update(value => value + 1);  // value = 1
 counter.reset(0);                    // value = 0
@@ -43,7 +45,7 @@ counter.reset(0);                    // value = 0
 
 Views can be rendered with the `mount` function.
 
-```
+```js
 import { mount } from "flyps";
 
 mount(document.querySelector("#my-view"),
@@ -61,11 +63,12 @@ mount(document.querySelector("#my-view"),
 
 ### Snabbdom rendering
 
-For more complex views we suggest to add the [flyps-dom-snabbdom] extension, which adds support for [snabbdom] rendering.
+For more complex views we suggest adding the [flyps-dom-snabbdom] extension, 
+which adds support for [snabbdom] rendering.
 
 First install the extension: `npm i flyps-dom-snabbdom`
 
-```
+```js
 import { mount, h } from "flyps-dom-snabbdom";
 
 mount(document.querySelector("#my-view"),
@@ -74,7 +77,7 @@ mount(document.querySelector("#my-view"),
 ```
 
 ### Render value from signal
-```
+```js
 import { signal } from "flyps";
 import { mount, h } from "flyps-dom-snabbdom";
 
@@ -87,7 +90,7 @@ mount(document.querySelector("#my-view"),
 
 Whenever the `signal` changes the view will be re-rendered with the new data.
 
-```
+```js
 data.reset("Hello User!");
 ```
 
