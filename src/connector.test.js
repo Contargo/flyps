@@ -39,7 +39,7 @@ describe("connect", () => {
   it("returns undefined for unknown connectors", () => {
     expect(connect("bar")).toBeUndefined();
     expect(global.console.warn).toHaveBeenCalledWith(
-      "no connector registered for:",
+      "no connector registered for",
       "bar",
     );
   });

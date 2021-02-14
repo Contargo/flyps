@@ -17,7 +17,7 @@ describe("effect", () => {
   it("logs a warning for unknown effectors", () => {
     effect("foo", "bar");
     expect(global.console.warn).toHaveBeenCalledWith(
-      "no effector registered for:",
+      "no effector registered for",
       "foo",
     );
   });

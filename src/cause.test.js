@@ -16,7 +16,7 @@ describe("cause", () => {
   it("logs a warning for unknown causings", () => {
     cause("foo", "bar");
     expect(global.console.warn).toHaveBeenCalledWith(
-      "no causing registered for:",
+      "no causing registered for",
       "foo",
     );
   });
