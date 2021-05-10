@@ -1,7 +1,0 @@
-{
-  "app": {
-    "title": "flyps Reference Documentation"
-  },
-  "src": ["./src/**/*.js"],
-  "dest": "./docs/reference"
-}
