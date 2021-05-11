@@ -1,6 +1,7 @@
-node_modules/
-dist/
 coverage/
+docs/reference/
+dist/
+node_modules/
 site/public
 site/resources
 site/static/js/bundle.js
