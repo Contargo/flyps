@@ -126,7 +126,7 @@ describe("trigger", () => {
     trigger("bar");
     ticker.advance();
     expect(global.console.warn).toHaveBeenCalledWith(
-      "no handler registered for:",
+      "no handler registered for",
       "bar",
     );
   });
@@ -142,7 +142,7 @@ describe("triggerImmediately", () => {
   it("logs a warning for unknown events", () => {
     triggerImmediately("bar");
     expect(global.console.warn).toHaveBeenCalledWith(
-      "no handler registered for:",
+      "no handler registered for",
       "bar",
     );
   });

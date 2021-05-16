@@ -1,9 +1,9 @@
 /**
- * Unlike an effect, a cause does not mutate but extracts state from the world.
+ * Unlike effects that mutate state, a cause extracts state from the world.
  * By providing a cause identifier the registered cause handler gets called and
  * must return the requested state. A cause can be anything, e.g. the current
- * state of a `signal`, the current time or a browsers window dimensions, just
- * to give some examples.
+ * state of a `signal`, the current time or the dimensions of the browser
+ * window, to name just a few examples.
  *
  * @module cause
  */
@@ -39,7 +39,7 @@ export function cause(causeId, ...args) {
   if (handlerFn) {
     return handlerFn(...args);
   }
-  console.warn("no causing registered for:", causeId);
+  console.warn("no causing registered for", causeId);
 }
 
 /**

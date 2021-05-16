@@ -3,7 +3,7 @@ import { cause } from "./cause";
 import { effect } from "./effect";
 
 /**
- * The event module provides machanisms to trigger and handle the happening of
+ * The event module provides mechanisms to trigger and handle the happening of
  * events. Raw event handlers are based on reading from and writing to contexts.
  * On top of the provided event contexts there is the concept of an event
  * handler having causes and describing effects. Therefore, an event handler is
@@ -117,7 +117,7 @@ export function clearHandlers() {
 
 /**
  * Creates an interceptor which injects the cause identified by `causeId` into
- * the contexts causes.
+ * the context's causes.
  */
 export function injectCause(causeId, ...args) {
   return nextFn => {
@@ -147,5 +147,5 @@ function handle(eventId, ...args) {
   if (handlerFn) {
     return handlerFn(eventId, ...args);
   }
-  console.warn("no handler registered for:", eventId);
+  console.warn("no handler registered for", eventId);
 }

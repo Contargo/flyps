@@ -12,9 +12,9 @@
  */
 
 /**
- * A Signal is a container used to store state information. A Signal can be made
- * to change state by calling `reset` or `update`.
- * Outputs can be connected to signals. Whenever the state of a Signal changes,
+ * A signal is a container used to store state information. The state of a
+ * signal can be changed by calling its `reset` or `update` function.
+ * Outputs can be connected to signals. Whenever the state of a signal changes,
  * all connected outputs will be triggered.
  *
  * @typedef Signal
@@ -23,10 +23,10 @@
 let defaultEquals = (a, b) => a === b;
 
 /**
- * Creates a new Signal.
+ * Creates a new signal.
  *
  * @param {*} state The initial state.
- * @param {*} options The signals options.
+ * @param {*} options The signal's options.
  * @returns {Signal} The created signal.
  */
 export function signal(state, options = {}) {
@@ -66,9 +66,9 @@ export function signal(state, options = {}) {
 }
 
 /**
- * A SignalFn is a signal that computes its state by running `fn`. It keeps
- * track of and connects to all referenced input signals during the function
- * call. If the state of any of the connected input signals changes, the state
+ * A SignalFn is a signal that computes its state by running `fn`. It connects
+ * to all referenced input signals during the function call and keeps track of
+ * them. If the state of any of the connected input signals changes, the state
  * of SignalFn gets re-computed (which means re-running `fn`). The state held by
  * the SignalFn is the return value of `fn` and can be preset using `state`.
  * Like with signals, outputs can be connected. Whenever the state of a SignalFn
@@ -82,7 +82,7 @@ export function signal(state, options = {}) {
  *
  * @param {function} fn The compute function.
  * @param {*} state The initial state.
- * @param {*} options The signals options.
+ * @param {*} options The signal's options.
  * @returns {SignalFn} The created signal.
  */
 export function signalFn(fn, state, options = {}) {
@@ -181,7 +181,7 @@ export function signalFn(fn, state, options = {}) {
 
 /**
  * Holds the current, global context for a signalFn. A context urges referenced
- * signals to register as input signals. signalFns can therefore use a context
+ * signals to register as input signals. SignalFns can therefore use a context
  * for tracking and book keeping of referenced input signals.
  */
 let context = undefined;

@@ -2,10 +2,10 @@ import { signalFn } from "./signal";
 
 /**
  * A connector is a helper to simplify building signal circuits. Connectors
- * give access to signals. By providing a connectors identifier it's possible
+ * give access to signals. By providing a connector's identifier it's possible
  * to connect to a specific signal without the need of explicit interconnections
  * in your code (loose coupling). Connectors can be created by passing a
- * function that returns a connectors state. The connector will then take care
+ * function that returns a connector's state. The connector will then take care
  * of the signal creation and lifetime management for you.
  *
  * @module connector
@@ -78,7 +78,7 @@ export function connect(connectorId) {
   if (connectorFn) {
     return cacheAndReturn(connectorId, connectorFn(connectorId));
   }
-  console.warn("no connector registered for:", connectorId);
+  console.warn("no connector registered for", connectorId);
 }
 
 /**

@@ -1,9 +1,9 @@
 /**
  * An effector is the place where all the dirty stuff happens. By providing an
- * effects identifier the registered effect handler gets called and must do the
- * required mutations to the world. This can be anything, e.g. reset a
- * `signal`s state, `trigger` events, change the browsers state (e.g. updating a
- * scrollbars position) or doing xhrs, just to give some examples.
+ * effect's identifier the registered effect handler gets called and must do
+ * the required mutations of the world. This can be anything, e.g. reset a
+ * `signal`'s state, `trigger` events, change the browser's state (e.g.
+ * updating the scrollbar position) or doing XHRs, to name just a few examples.
  *
  * @module effect
  */
@@ -40,7 +40,7 @@ export function effect(effectId, ...args) {
     handlerFn(...args);
     return;
   }
-  console.warn("no effector registered for:", effectId);
+  console.warn("no effector registered for", effectId);
 }
 
 /**
